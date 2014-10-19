@@ -10,10 +10,9 @@ public class Date {
 		this.hour = hour;
 		this.minute = minute;
 	}
-	
+
 	@Override
-	public String toString(){
-		return null;
-		
+	public String toString() {
+		return year + "." + month + "." + "." + day + " " + hour + ":" + minute;
 	}
 }
