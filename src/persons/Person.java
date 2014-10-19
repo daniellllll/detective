@@ -8,7 +8,7 @@ public class Person {
 	private String haircolor;
 	private String characteristic;
 	private Circle friends, enemies, family, acquaintances;
-	private Calendar history;
+	private Calendar calendar;
 	
 	public Person (String name, String haircolor, String characteristic){
 		this.name = name;
@@ -18,6 +18,7 @@ public class Person {
 		enemies = new Circle();
 		family = new Circle();
 		acquaintances = new Circle();
+		calendar = new Calendar();
 	}
 	
 	public String getName(){
@@ -49,7 +50,7 @@ public class Person {
 	}
 	
 	public Calendar getHistory(){
-		return history;
+		return calendar;
 	}
 	
 
