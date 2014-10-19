@@ -1,5 +1,6 @@
 package main;
 
+import persons.Generator;
 import persons.Person;
 import ui.UI;
 
@@ -9,7 +10,7 @@ public class Control {
 //		UI.write("gib was ein:");
 //		String input = UI.read();
 //		UI.write("du hast eingegeben: " + input);
-		Person A = new Person("Peter Enis", null, null);
+		Generator.generate();
 	}
 
 }
