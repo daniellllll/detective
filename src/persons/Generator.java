@@ -23,30 +23,33 @@ public class Generator {
 		Person[] persons = new Person[100];
 
 		int firstGenNum = 20;
-		int[] numChilds = { 2, 2, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
-				3, 3, 3, 4, 4, 4, 4, 4 };
-		int childCount = 0;
 		int personCount = 0;
-
-		// for (personCount = 0; personCount < firstGenNum; personCount += 2) {
-		// String lastname = getNewFamilyname(persons);
-		// String surname_m = getSurname(persons, lastname, Gender.male);
-		// String surname_f = getSurname(persons, lastname, Gender.female);
-		// persons[personCount] = new Person(Gender.male, surname_m, lastname,
-		// null, null, null, null);
-		// persons[personCount + 1] = new Person(Gender.female, surname_f,
-		// lastname, null, null, null, null);
-		// System.out
-		// .println(surname_m + " und " + surname_f + " " + lastname);
-		// }
 
 		String familynames[] = new String[firstGenNum / 2];
 		Random.getUniqueElems(lastnames, familynames);
 		for (String lastname : familynames) {
+			// generate parents (1. Gen.)
 			Person man = getRandPerson(persons, Gender.male, lastname);
 			Person woman = getRandPerson(persons, Gender.female, lastname);
-			System.out.println(man.getSurname()+ " und "+woman.getSurname()+" "+lastname);
-			
+			man.setPartner(woman);
+			woman.setPartner(man);
+			persons[personCount++] = man;
+			persons[personCount++] = woman;
+			System.out.println(man.getSurname() + " und " + woman.getSurname()
+					+ " " + lastname);
+			// generate childs (2. Gen.)
+			persons[personCount++] = getRandPerson(persons, Gender.male, man,
+					woman);
+			persons[personCount++] = getRandPerson(persons, Gender.male, man,
+					woman);
+			persons[personCount++] = getRandPerson(
+					persons,
+					Random.getRandElem(new Gender[] { Gender.male,
+							Gender.female }), man, woman);
+			System.out.println("   Kinder: "
+					+ persons[personCount - 1].getSurname() + ", "
+					+ persons[personCount - 2].getSurname() + ", "
+					+ persons[personCount - 3].getSurname() + "\n");
 		}
 
 		// Nachname auswählen
@@ -104,18 +107,22 @@ public class Generator {
 		return surname;
 	}
 
-	private static Person getRandPerson(Person persons[], Gender gender, Person father, Person mother){
+	private static Person getRandPerson(Person persons[], Gender gender,
+			Person father, Person mother) {
 		String lastname = mother.getLastname();
-		String surname = getSurname(persons,lastname,gender);
+		String surname = getSurname(persons, lastname, gender);
 		String haircolor = Random.getRandElem(haircolors);
 		String characteristic = Random.getRandElem(characteristics);
-		return new Person(gender, surname, lastname, haircolor, characteristic, father, mother);
+		return new Person(gender, surname, lastname, haircolor, characteristic,
+				father, mother);
 	}
-	
-	private static Person getRandPerson(Person persons[], Gender gender, String lastname){
-		String surname = getSurname(persons,lastname,gender);
+
+	private static Person getRandPerson(Person persons[], Gender gender,
+			String lastname) {
+		String surname = getSurname(persons, lastname, gender);
 		String haircolor = Random.getRandElem(haircolors);
 		String characteristic = Random.getRandElem(characteristics);
-		return new Person(gender, surname, lastname, haircolor, characteristic, null, null);
+		return new Person(gender, surname, lastname, haircolor, characteristic,
+				null, null);
 	}
 }
