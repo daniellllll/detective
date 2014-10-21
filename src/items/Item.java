@@ -1,6 +1,8 @@
 package items;
 
-public abstract class Item {
+import interfaces.Inspectable;
+
+public abstract class Item implements Inspectable{
 	protected String name;
 	
 	public Item(String name){
@@ -11,5 +13,4 @@ public abstract class Item {
 	
 	public abstract void use(Item item);
 	
-	public abstract void inspect();
 }

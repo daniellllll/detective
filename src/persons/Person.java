@@ -1,8 +1,10 @@
 package persons;
 
+import ui.UI;
+import interfaces.Inspectable;
 import calendar.Calendar;
 
-public class Person {
+public class Person implements Inspectable {
 
 	private String surname, lastname;
 	private String haircolor;
@@ -16,8 +18,9 @@ public class Person {
 		male, female
 	};
 
-	public Person(Gender gender, String surname, String lastname, String haircolor,
-			String characteristic, Person father, Person mother) {
+	public Person(Gender gender, String surname, String lastname,
+			String haircolor, String characteristic, Person father,
+			Person mother) {
 		this.surname = surname;
 		this.lastname = lastname;
 		this.haircolor = haircolor;
@@ -39,8 +42,8 @@ public class Person {
 	public String getSurname() {
 		return surname;
 	}
-	
-	public String getLastname(){
+
+	public String getLastname() {
 		return lastname;
 	}
 
@@ -62,7 +65,7 @@ public class Person {
 
 	public Circle getFamily() {
 		return family;
-	}	
+	}
 
 	public Calendar getCalendar() {
 		return calendar;
@@ -98,6 +101,17 @@ public class Person {
 
 	public Calendar getHistory() {
 		return calendar;
+	}
+
+	@Override
+	public String getName() {
+		return surname + " " + lastname;
+	}
+
+	@Override
+	public void inspect() {
+		UI.write(surname + " " + lastname + " has " + haircolor
+				+ " hair and " + characteristic + ".");
 	}
 
 }

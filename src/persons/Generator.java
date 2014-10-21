@@ -20,7 +20,7 @@ public class Generator {
 	private static String[] characteristics = { "a big nose" };
 
 	public static Person[] generate() {
-		Person[] persons = new Person[100];
+		Person[] persons = new Person[50];
 
 		int firstGenNum = 20;
 		int personCount = 0;
@@ -35,8 +35,6 @@ public class Generator {
 			woman.setPartner(man);
 			persons[personCount++] = man;
 			persons[personCount++] = woman;
-			System.out.println(man.getSurname() + " und " + woman.getSurname()
-					+ " " + lastname);
 			// generate childs (2. Gen.)
 			persons[personCount++] = getRandPerson(persons, Gender.male, man,
 					woman);
@@ -46,10 +44,6 @@ public class Generator {
 					persons,
 					Random.getRandElem(new Gender[] { Gender.male,
 							Gender.female }), man, woman);
-			System.out.println("   Kinder: "
-					+ persons[personCount - 1].getSurname() + ", "
-					+ persons[personCount - 2].getSurname() + ", "
-					+ persons[personCount - 3].getSurname() + "\n");
 		}
 
 		// Nachname auswählen
