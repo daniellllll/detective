@@ -9,7 +9,7 @@ public class Person {
 	private String characteristic;
 	private Circle friends, enemies, family, acquaintances;
 	private Calendar calendar;
-	private Person father, mother, siblings[];
+	private Person father, mother, siblings[], partner;
 	private Gender gender;
 
 	public enum Gender {
@@ -78,6 +78,14 @@ public class Person {
 
 	public Person[] getSiblings() {
 		return siblings;
+	}
+
+	public Person getPartner() {
+		return partner;
+	}
+
+	public void setPartner(Person partner) {
+		this.partner = partner;
 	}
 
 	public Gender getGender() {
