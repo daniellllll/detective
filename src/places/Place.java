@@ -47,9 +47,13 @@ public class Place implements Inspectable {
 
 	@Override
 	public void inspect() {
-		UI.write("Following people are in this room:");
+		UI.write("The following people are in this room:");
 		for (Person p : persons) {
 			UI.write(p.getName());
+		}
+		UI.write("The following Items are in this room:");
+		for (Item i : items) {
+			UI.write(i.getName());
 		}
 	}
 

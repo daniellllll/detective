@@ -1,16 +1,18 @@
 package items;
 
 import interfaces.Inspectable;
+import interfaces.Useable;
 
-public abstract class Item implements Inspectable{
+public abstract class Item implements Inspectable, Useable{
 	protected String name;
 	
 	public Item(String name){
 		this.name = name;
 	}
 	
-	public abstract void insert(Item item);
-	
-	public abstract void use(Item item);
+	@Override
+	public String getName() {
+		return name;
+	}
 	
 }

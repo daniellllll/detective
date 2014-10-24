@@ -1,6 +1,7 @@
 package main;
 
 import interfaces.Inspectable;
+import items.Knife;
 import persons.Generator;
 import persons.Person;
 import places.Place;
@@ -22,10 +23,12 @@ public class Control implements UIListener {
 		for (Person p : persons) {
 			pub.addPerson(p);
 		}
+		
+		Knife knife = new Knife("knife");
+		pub.addItem(knife);
 
 		player = new Player();
-		player.goTo(pub);
-		updateInspectables();
+		player.goTo(pub);		
 
 		UI.addUIListener(this);
 		UI.write("You are in the Pub.");
@@ -35,6 +38,7 @@ public class Control implements UIListener {
 
 	@Override
 	public void onInspect(String name) {
+		updateInspectables();
 		for (Inspectable insp : inspectables) {
 			if (insp.getName().equals(name)) {
 				insp.inspect();
