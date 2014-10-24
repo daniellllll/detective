@@ -1,7 +1,8 @@
 package main;
 
 import interfaces.Inspectable;
-import items.Knife;
+import interfaces.Useable;
+import items.*;
 import persons.Generator;
 import persons.Person;
 import places.Place;
@@ -11,6 +12,7 @@ import ui.UIListener;
 
 public class Control implements UIListener {
 	private Inspectable inspectables[];
+	private Useable useables[];
 	private Player player;
 
 	public static void main(String[] args) {
@@ -23,12 +25,16 @@ public class Control implements UIListener {
 		for (Person p : persons) {
 			pub.addPerson(p);
 		}
-		
+
 		Knife knife = new Knife("knife");
 		pub.addItem(knife);
+		Pencil pencil = new Pencil("pencil");
+		pub.addItem(pencil);
+		Notepad notepad = new Notepad("notepad");
+		pub.addItem(notepad);
 
 		player = new Player();
-		player.goTo(pub);		
+		player.goTo(pub);
 
 		UI.addUIListener(this);
 		UI.write("You are in the Pub.");
@@ -45,7 +51,25 @@ public class Control implements UIListener {
 				return;
 			}
 		}
-		UI.write("There is no \""+name+"\"");
+		UI.write("There is no \"" + name + "\"");
+	}
+
+	@Override
+	public void onUse(String item1, String item2) {
+		updateUseables();
+		Useable a = null, b = null;
+		for (Useable useable : useables) {
+			if (useable.getName().equals(item1)) {
+				a = useable;
+			} else if (useable.getName().equals(item2)) {
+				b = useable;
+			}
+			if (a != null && b != null) {
+				b.use((Item) a);
+				return;
+			}
+		}
+		UI.write("There is no " + item1 + " or " + item2 + ".");
 	}
 
 	private void updateInspectables() {
@@ -54,6 +78,14 @@ public class Control implements UIListener {
 		int i = 1;
 		for (Inspectable insp : player.getPlace().getInspectables()) {
 			inspectables[i++] = insp;
+		}
+	}
+
+	private void updateUseables() {
+		useables = new Useable[player.getPlace().getUseables().length];
+		int i = 0;
+		for (Useable u : player.getPlace().getUseables()) {
+			useables[i++] = u;
 		}
 	}
 

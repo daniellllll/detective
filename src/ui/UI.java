@@ -22,10 +22,16 @@ public class UI {
 		case "inspect":
 			listener.onInspect(input);
 			break;
+		case "use":
+			int forbegin = input.indexOf("for");
+			String item1 = input.substring(0, forbegin-1);
+			String item2 = input.substring(forbegin+4);
+			listener.onUse(item1, item2);
+			break;
 		}
 	}
 
-	private static String read() {
+	public static String read() {
 		try {
 			BufferedReader bufferRead = new BufferedReader(
 					new InputStreamReader(System.in));

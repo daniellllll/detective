@@ -6,6 +6,7 @@ import java.util.List;
 import persons.Person;
 import ui.UI;
 import interfaces.Inspectable;
+import interfaces.Useable;
 import items.Item;
 
 public class Place implements Inspectable {
@@ -38,6 +39,15 @@ public class Place implements Inspectable {
 			insps[i++] = (Inspectable) item;
 		}
 		return insps;
+	}
+	
+	public Useable[] getUseables(){
+		Useable useables[] = new Useable[items.size()];
+		int i=0;
+		for (Item item : items) {
+			useables[i++] = (Useable) item;
+		}
+		return useables;
 	}
 
 	@Override
