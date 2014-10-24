@@ -4,22 +4,26 @@ import utils.Random;
 import persons.Person.Gender;
 
 public class Generator {
-
-	private static String[] surnames_m = { "Daniel", "Heinz", "Peter", "Max",
-			"Marko", "Johann", "Sebastian", "Harald", "Xaver", "Wolfgang",
-			"Richard", "Johnny", "Flin", "Legolas", "Patrick", "Tony",
-			"Michael", "Dr. Reinhard" };
-	private static String[] surnames_f = { "Susanna", "Josefine", "Tina",
-			"Spohie", "Marie", "Gina", "Tekla", "Babette", "Hanna", "Roxanne",
-			"Colette", "Zoey", "Isabelle", "Jasmin", "Rose", "Ena", "Meike",
-			"Lisa", "Tammie" };
-	private static String[] lastnames = { "von Hamsterdamm", "Pinkeldington",
-			"Jones", "von Hier", "Miller", "Smith", "Colt", "Middleton",
-			"Bang", "Williams", "Richardson" };
+	
+	private static String[] surnames_m_german = {"Peter", "Michael","Klaus", "Kurt", "Richard", "Franz", "Maximillian", "Johann", "Christian", "Manuel", "Gabriel", "Gerhard", "Paul", "Daniel", "Oskar", "Herbert", "Adolf", "Friedolin", "Janosch", "Jonas", "Fabian", "Philipp", "Sebastian", "Lukas", "Niko", "Olaf"};
+	private static String[] surnames_f_german = {"Anna", "Lisa", "Lena", "Ronja", "Lara", "Maria", "Johanna", "Karolin", "Annemarie", "Lotte", "Lieschen", "Lieselotte", "Laura", "Rebecka", "Alexandra", "Petra", "Beate", "Ursula", "Rosi", "Erika", "Jolanda", "Tina", "Maresa", "Elisabeth", "Josephine", "Heidi"};
+	private static String[] lastnames_german = {"Meyer", "Becker", "Kirschenbaum", "Silbereisen", "Berg", "Stein", "Vogel", "Eckel", "Bamberger", "Hertz", "Bauer", "Henkel", "Vetter", "Hofmann", "Theis", "Schneider", "Fischer", "Weber", "Wagner", "Schulz", "Koch", "Schwarz", "Weiss", "Wolf", "Braun", "Zimmermann", "Schmidt", "Hahn", "Berger"};
+	private static String[] surnames_m_english = {"Zachory", "Mike", "Alan", "Dorian", "Matt", "Douglas", "John", "Jack", "Ronan", "Harry", "Jim", "Ted", "Stewart", "Peter", "Mikel", "Ethan", "Berry", "Phil", "Barney", "George", "Malcolm", "Steven", "Coby", "Hall", "Jason", "Justin", "Charlie", "Joe"}; 
+	private static String[] surnames_f_english = {"Debbie", "Liz", "Lesley", "Kendra", "Jules", "Ruby", "Jean", "Victoria", "Rose", "Maggy", "Diana", "Linda", "Lilith", "Nicole", "Stephanie", "Joana", "Elizabeth", "Megan", "Carry"};
+	private static String[] lastnames_english = {"Smith", "Miller", "Roberts", "Cooper", "Colt", "Middleton", "Tannenbaum", "Kirschenbaum", "Tanner", "Jackson", "Bolton", "King", "Nichols"};
+	private static String[][][] countries = {{surnames_m_german, surnames_f_german, lastnames_german}, {surnames_m_english, surnames_f_english, lastnames_english}};
+	private static String[] surnames_m;
+	private static String[] surnames_f;
+	private static String[] lastnames;
 	private static String[] haircolors = { "blonde", "brunette", "black", "red" };
 	private static String[] characteristics = { "a big nose" };
 
 	public static Person[] generate() {
+		String country[][] = Random.getRandElem(countries);
+		surnames_m = country[0];
+		surnames_f = country[1];
+		lastnames = country[2];
+		
 		Person[] persons = new Person[50];
 
 		int firstGenNum = 20;
