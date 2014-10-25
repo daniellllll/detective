@@ -38,8 +38,10 @@ public class Control implements UIListener {
 
 		UI.addUIListener(this);
 		UI.write("You are in the Pub.");
-		while (true)
+		while (true) {
+			System.out.println(time.Time.now());
 			UI.waitForInput();
+		}
 	}
 
 	@Override
