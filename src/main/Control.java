@@ -32,6 +32,8 @@ public class Control implements UIListener {
 		pub.addItem(pencil);
 		Notepad notepad = new Notepad("notepad");
 		pub.addItem(notepad);
+		Watch watch = new Watch("watch");
+		pub.addItem(watch);
 
 		player = new Player();
 		player.goTo(pub);
@@ -39,7 +41,6 @@ public class Control implements UIListener {
 		UI.addUIListener(this);
 		UI.write("You are in the Pub.");
 		while (true) {
-			System.out.println(time.Time.now());
 			UI.waitForInput();
 		}
 	}
