@@ -8,4 +8,5 @@ public interface ItemContainer {
 	
 	public void removeItem(Item item);
 
+	public Item[] getItems();
 }
