@@ -1,5 +1,6 @@
 package items;
 
+import player.Player;
 import ui.UI;
 
 public class Notepad extends Item {
@@ -20,9 +21,13 @@ public class Notepad extends Item {
 	@Override
 	public void use(Item item) {
 		if (item instanceof Pencil) {
-			UI.write("Make notes!");
-			String note = UI.read();
-			notes += note + "\n\n";
+			if (item.container instanceof Player && container instanceof Player) {
+				UI.write("Make notes!");
+				String note = UI.read();
+				notes += note + "\n\n";
+			} else {
+				UI.write("You should own the items you want to use!");
+			}
 		} else {
 			UI.write("This won't work.");
 		}

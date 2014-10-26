@@ -103,10 +103,13 @@ public class Control implements UIListener {
 	}
 
 	private void updateUseables() {
-		useables = new Useable[player.getPlace().getUseables().length];
+		useables = new Useable[player.getPlace().getUseables().length+ player.getItems().length];
 		int i = 0;
 		for (Useable u : player.getPlace().getUseables()) {
 			useables[i++] = u;
+		}
+		for (Item item : player.getItems()) {
+			useables[i++] = item;
 		}
 	}
 
