@@ -28,6 +28,9 @@ public class UI {
 			String item2 = input.substring(forbegin+4);
 			listener.onUse(item1, item2);
 			break;
+		case "take":
+			listener.onTake(input);
+			break;
 		}
 	}
 
