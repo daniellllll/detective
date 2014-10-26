@@ -6,10 +6,11 @@ import java.util.List;
 import persons.Person;
 import ui.UI;
 import interfaces.Inspectable;
+import interfaces.ItemContainer;
 import interfaces.Useable;
 import items.Item;
 
-public class Place implements Inspectable {
+public class Place implements Inspectable, ItemContainer {
 
 	private String name;
 	private List<Person> persons;
@@ -23,10 +24,6 @@ public class Place implements Inspectable {
 
 	public void addPerson(Person person) {
 		persons.add(person);
-	}
-
-	public void addItem(Item item) {
-		items.add(item);
 	}
 
 	public Inspectable[] getInspectables() {
@@ -65,6 +62,16 @@ public class Place implements Inspectable {
 		for (Item i : items) {
 			UI.write(i.getName());
 		}
+	}
+
+	@Override
+	public void insertItem(Item item) {
+		items.add(item);		
+	}
+
+	@Override
+	public void removeItem(Item item) {
+		items.remove(item);
 	}
 
 }

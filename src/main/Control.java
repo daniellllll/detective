@@ -27,13 +27,13 @@ public class Control implements UIListener {
 		}
 
 		Knife knife = new Knife("knife");
-		pub.addItem(knife);
+		knife.insertInto(pub);
 		Pencil pencil = new Pencil("pencil");
-		pub.addItem(pencil);
+		pencil.insertInto(pub);
 		Notepad notepad = new Notepad("notepad");
-		pub.addItem(notepad);
+		notepad.insertInto(pub);
 		Watch watch = new Watch("watch");
-		pub.addItem(watch);
+		watch.insertInto(pub);
 
 		player = new Player();
 		player.goTo(pub);
@@ -76,10 +76,19 @@ public class Control implements UIListener {
 	}
 
 	@Override
-	public void onTake(String name) {		
-		
+	public void onTake(String name) {
+		updateInspectables();
+		for (Inspectable insp : inspectables) {
+			if (insp.getName().equals(name)) {
+				if (insp instanceof Item) {
+					((Item) insp).insertInto(player);
+					return;
+				}
+			}
+		}
+		UI.write("There is no \"" + name + "\"");
 	}
-	
+
 	private void updateInspectables() {
 		inspectables = new Inspectable[2 + player.getPlace().getInspectables().length];
 		inspectables[0] = player.getPlace();
