@@ -1,6 +1,7 @@
 package items;
 
 import interfaces.Inspectable;
+import interfaces.ItemContainer;
 import interfaces.Useable;
 
 public abstract class Item implements Inspectable, Useable{
@@ -13,6 +14,10 @@ public abstract class Item implements Inspectable, Useable{
 	@Override
 	public String getName() {
 		return name;
+	}
+	
+	public void insertInto(ItemContainer container){
+		container.insertItem(this);
 	}
 	
 }

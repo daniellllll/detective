@@ -28,6 +28,7 @@ public class Player implements ItemContainer, Inspectable {
 	@Override
 	public void insertItem(Item item) {
 		items.add(item);
+		UI.write(item.getName()+" is now in your bag");
 	}
 
 	@Override
