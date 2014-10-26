@@ -48,4 +48,9 @@ public class Player implements ItemContainer, Inspectable {
 			UI.write(i.getName());
 		}
 	}
+
+	@Override
+	public Item[] getItems() {
+		return (Item[]) items.toArray(new Item[0]);
+	}
 }

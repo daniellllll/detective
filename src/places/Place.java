@@ -74,4 +74,9 @@ public class Place implements Inspectable, ItemContainer {
 		items.remove(item);
 	}
 
+	@Override
+	public Item[] getItems() {
+		return (Item[]) items.toArray(new Item[0]);
+	}
+
 }

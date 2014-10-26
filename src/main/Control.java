@@ -90,12 +90,15 @@ public class Control implements UIListener {
 	}
 
 	private void updateInspectables() {
-		inspectables = new Inspectable[2 + player.getPlace().getInspectables().length];
+		inspectables = new Inspectable[2 + player.getPlace().getInspectables().length + player.getItems().length];
 		inspectables[0] = player.getPlace();
 		inspectables[1] = player;
 		int i = 2;
 		for (Inspectable insp : player.getPlace().getInspectables()) {
 			inspectables[i++] = insp;
+		}
+		for (Item item : player.getItems()) {
+			inspectables[i++] = item;
 		}
 	}
 
