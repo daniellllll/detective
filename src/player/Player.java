@@ -3,11 +3,13 @@ package player;
 import java.util.ArrayList;
 import java.util.List;
 
+import interfaces.Inspectable;
 import interfaces.ItemContainer;
 import items.Item;
 import places.Place;
+import ui.UI;
 
-public class Player implements ItemContainer {
+public class Player implements ItemContainer, Inspectable {
 	private Place place;
 	private List<Item> items;
 
@@ -31,5 +33,18 @@ public class Player implements ItemContainer {
 	@Override
 	public void removeItem(Item item) {
 		items.remove(item);
+	}
+
+	@Override
+	public String getName() {
+		return "me";
+	}
+
+	@Override
+	public void inspect() {
+		UI.write("You have the following items:");
+		for (Item i : items) {
+			UI.write(i.getName());
+		}
 	}
 }
