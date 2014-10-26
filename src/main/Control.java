@@ -75,6 +75,11 @@ public class Control implements UIListener {
 		UI.write("There is no " + item1 + " or " + item2 + ".");
 	}
 
+	@Override
+	public void onTake(String name) {		
+		
+	}
+	
 	private void updateInspectables() {
 		inspectables = new Inspectable[2 + player.getPlace().getInspectables().length];
 		inspectables[0] = player.getPlace();
