@@ -1,5 +1,7 @@
 package ui;
 
+import ui.UI.QuestionType;
+
 public interface UIListener {
 
 	public void onInspect(String name);
@@ -7,4 +9,6 @@ public interface UIListener {
 	public void onUse(String item1, String item2);
 
 	public void onTake(String name);
+	
+	public void onAsk(String name, QuestionType type, String question);
 }

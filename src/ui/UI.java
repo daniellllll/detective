@@ -6,6 +6,10 @@ import java.io.InputStreamReader;
 
 public class UI {
 
+	public enum QuestionType {
+		DO_YOU_KNOW
+	};
+
 	private static UIListener listener;
 
 	public static void write(String text) {
@@ -24,12 +28,24 @@ public class UI {
 			break;
 		case "use":
 			int forbegin = input.indexOf("for");
-			String item1 = input.substring(0, forbegin-1);
-			String item2 = input.substring(forbegin+4);
+			String item1 = input.substring(0, forbegin - 1);
+			String item2 = input.substring(forbegin + 4);
 			listener.onUse(item1, item2);
 			break;
 		case "take":
 			listener.onTake(input);
+			break;
+		case "ask":
+			String question = read();
+			QuestionType type = null;
+			if (question.startsWith("do you know")) {
+				question = question.substring(12);
+				type = QuestionType.DO_YOU_KNOW;
+			} else {
+				write("Unknown question.");
+				return;
+			}
+			listener.onAsk(input, type, question);
 			break;
 		}
 	}

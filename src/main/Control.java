@@ -8,6 +8,7 @@ import persons.Person;
 import places.Place;
 import player.Player;
 import ui.UI;
+import ui.UI.QuestionType;
 import ui.UIListener;
 
 public class Control implements UIListener {
@@ -111,6 +112,13 @@ public class Control implements UIListener {
 		for (Item item : player.getItems()) {
 			useables[i++] = item;
 		}
+	}
+
+	@Override
+	public void onAsk(String name, QuestionType type, String question) {
+		System.out.println(question);
+		System.out.println(name);
+		
 	}
 
 }
