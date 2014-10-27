@@ -1,6 +1,6 @@
 package ui;
 
-import ui.UI.QuestionType;
+import persons.Person.QuestionType;
 
 public interface UIListener {
 

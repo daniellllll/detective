@@ -4,11 +4,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class UI {
+import persons.Person.QuestionType;
 
-	public enum QuestionType {
-		DO_YOU_KNOW
-	};
+public class UI {
 
 	private static UIListener listener;
 

@@ -6,6 +6,14 @@ import calendar.Calendar;
 
 public class Person implements Inspectable {
 
+	public enum Relationship {
+		FATHER, MOTHER, SIBLING, FRIEND, PARTNER
+	}
+
+	public enum QuestionType {
+		DO_YOU_KNOW
+	};
+
 	private String surname, lastname;
 	private String haircolor;
 	private String characteristic;
@@ -28,11 +36,53 @@ public class Person implements Inspectable {
 		friends = new Circle();
 		enemies = new Circle();
 		family = new Circle();
+		siblings = new Person[0];
 		acquaintances = new Circle();
 		calendar = new Calendar();
 		this.father = father;
 		this.mother = mother;
 		this.gender = gender;
+	}
+
+	public void ask(QuestionType type, Person person) {
+		switch (type) {
+		case DO_YOU_KNOW:
+			switch (getRelationship(person)) {
+			case FATHER:
+				UI.write("Yes, he's my father.");
+				break;
+			case MOTHER:
+				UI.write("Yes, she's my mother.");
+				break;
+			case SIBLING:
+				if (person.getGender() == Gender.male) {
+					UI.write("Yes, he's my brother.");
+				} else {
+					UI.write("Yes, she's my sister.");
+				}
+				break;
+			default:
+				UI.write("I don't know this person.");
+				break;
+			}
+			break;
+		}
+	}
+
+	public Relationship getRelationship(Person person) {
+		if (person == father) {
+			return Relationship.FATHER;
+		}
+		if (person == mother) {
+			return Relationship.MOTHER;
+		}
+		for (Person p : siblings) {
+			if (p == person) {
+				return Relationship.SIBLING;
+			}
+		}
+
+		return null;
 	}
 
 	public void setSiblings(Person[] siblings) {
@@ -110,8 +160,8 @@ public class Person implements Inspectable {
 
 	@Override
 	public void inspect() {
-		UI.write(surname + " " + lastname + " has " + haircolor
-				+ " hair and " + characteristic + ".");
+		UI.write(surname + " " + lastname + " has " + haircolor + " hair and "
+				+ characteristic + ".");
 	}
 
 }

@@ -5,15 +5,16 @@ import interfaces.Useable;
 import items.*;
 import persons.Generator;
 import persons.Person;
+import persons.Person.QuestionType;
 import places.Place;
 import player.Player;
 import ui.UI;
-import ui.UI.QuestionType;
 import ui.UIListener;
 
 public class Control implements UIListener {
 	private Inspectable inspectables[];
 	private Useable useables[];
+	private Person persons[];
 	private Player player;
 
 	public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Control implements UIListener {
 	}
 
 	public Control() {
-		Person persons[] = Generator.generate();
+		persons = Generator.generate();
 		Place pub = new Place("Pub");
 		for (Person p : persons) {
 			pub.addPerson(p);
@@ -113,11 +114,30 @@ public class Control implements UIListener {
 			useables[i++] = item;
 		}
 	}
+	
+	private Person getAvailablePerson(String name){
+		for(Person p: player.getPlace().getPersons()){
+			if(p.getName().equals(name)){
+				return p;
+			}
+		}
+		return null;
+	}
 
 	@Override
 	public void onAsk(String name, QuestionType type, String question) {
-		System.out.println(question);
-		System.out.println(name);
+		Person personA = getAvailablePerson(name);
+		Person personB = getAvailablePerson(question);
+		if(personA == null){
+			UI.write(personA.getName()+" is not here!");
+			return;
+		}
+		if(personB == null){
+			UI.write(personB.getName()+" is not here!");
+			return;
+		}
+		
+		personA.ask(type, personB);
 		
 	}
 

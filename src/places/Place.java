@@ -37,14 +37,23 @@ public class Place implements Inspectable, ItemContainer {
 		}
 		return insps;
 	}
-	
-	public Useable[] getUseables(){
+
+	public Useable[] getUseables() {
 		Useable useables[] = new Useable[items.size()];
-		int i=0;
+		int i = 0;
 		for (Item item : items) {
 			useables[i++] = (Useable) item;
 		}
 		return useables;
+	}
+
+	public Person[] getPersons() {
+		Person pers[] = new Person[persons.size()];
+		int i = 0;
+		for (Person p : persons) {
+			pers[i++] = p;
+		}
+		return pers;
 	}
 
 	@Override
@@ -66,7 +75,7 @@ public class Place implements Inspectable, ItemContainer {
 
 	@Override
 	public void insertItem(Item item) {
-		items.add(item);		
+		items.add(item);
 	}
 
 	@Override
