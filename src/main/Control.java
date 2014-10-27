@@ -8,6 +8,7 @@ import persons.Person;
 import persons.Person.QuestionType;
 import places.Place;
 import player.Player;
+import time.Time;
 import ui.UI;
 import ui.UIListener;
 
@@ -22,6 +23,9 @@ public class Control implements UIListener {
 	}
 
 	public Control() {
+		// set time
+		Time.set(new Time(1815, 3, 21, 12, 0));
+		
 		persons = Generator.generate();
 		Place pub = new Place("Pub");
 		for (Person p : persons) {
@@ -92,7 +96,9 @@ public class Control implements UIListener {
 	}
 
 	private void updateInspectables() {
-		inspectables = new Inspectable[2 + player.getPlace().getInspectables().length + player.getItems().length];
+		inspectables = new Inspectable[2
+				+ player.getPlace().getInspectables().length
+				+ player.getItems().length];
 		inspectables[0] = player.getPlace();
 		inspectables[1] = player;
 		int i = 2;
@@ -105,7 +111,8 @@ public class Control implements UIListener {
 	}
 
 	private void updateUseables() {
-		useables = new Useable[player.getPlace().getUseables().length+ player.getItems().length];
+		useables = new Useable[player.getPlace().getUseables().length
+				+ player.getItems().length];
 		int i = 0;
 		for (Useable u : player.getPlace().getUseables()) {
 			useables[i++] = u;
@@ -114,10 +121,10 @@ public class Control implements UIListener {
 			useables[i++] = item;
 		}
 	}
-	
-	private Person getAvailablePerson(String name){
-		for(Person p: player.getPlace().getPersons()){
-			if(p.getName().equals(name)){
+
+	private Person getAvailablePerson(String name) {
+		for (Person p : player.getPlace().getPersons()) {
+			if (p.getName().equals(name)) {
 				return p;
 			}
 		}
@@ -128,17 +135,17 @@ public class Control implements UIListener {
 	public void onAsk(String name, QuestionType type, String question) {
 		Person personA = getAvailablePerson(name);
 		Person personB = getAvailablePerson(question);
-		if(personA == null){
-			UI.write(personA.getName()+" is not here!");
+		if (personA == null) {
+			UI.write(personA.getName() + " is not here!");
 			return;
 		}
-		if(personB == null){
-			UI.write(personB.getName()+" is not here!");
+		if (personB == null) {
+			UI.write(personB.getName() + " is not here!");
 			return;
 		}
-		
+
 		personA.ask(type, personB);
-		
+
 	}
 
 }
