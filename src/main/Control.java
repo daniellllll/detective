@@ -1,12 +1,12 @@
 package main;
 
+import generators.persons.PersonsGenerator;
 import interfaces.Inspectable;
 import interfaces.Useable;
 import items.*;
-import persons.Generator;
 import persons.Person;
 import persons.Person.QuestionType;
-import places.Place;
+import places.*;
 import player.Player;
 import time.Time;
 import ui.UI;
@@ -25,9 +25,9 @@ public class Control implements UIListener {
 	public Control() {
 		// set time
 		Time.set(new Time(1815, 3, 21, 12, 0));
-		
-		persons = Generator.generate();
-		Place pub = new Place("Pub");
+
+		persons = PersonsGenerator.generate();
+		Place pub = new Pub("Pub");
 		for (Person p : persons) {
 			pub.addPerson(p);
 		}

@@ -1,9 +1,10 @@
-package persons;
+package generators.persons;
 
 import utils.Random;
+import persons.Person;
 import persons.Person.Gender;
 
-public class Generator {
+public class PersonsGenerator {
 
 	private static String[] surnames_m_german = { "Peter", "Michael", "Klaus",
 			"Kurt", "Richard", "Franz", "Maximillian", "Johann", "Christian",

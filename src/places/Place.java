@@ -10,7 +10,7 @@ import interfaces.ItemContainer;
 import interfaces.Useable;
 import items.Item;
 
-public class Place implements Inspectable, ItemContainer {
+public abstract class Place implements Inspectable, ItemContainer {
 
 	private String name;
 	private List<Person> persons;

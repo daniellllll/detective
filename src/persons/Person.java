@@ -1,8 +1,10 @@
 package persons;
 
+import time.Time;
 import ui.UI;
 import interfaces.Inspectable;
 import calendar.Calendar;
+import calendar.Event;
 
 public class Person implements Inspectable {
 
@@ -11,7 +13,7 @@ public class Person implements Inspectable {
 	}
 
 	public enum QuestionType {
-		DO_YOU_KNOW
+		DO_YOU_KNOW, WHERE_WERE_YOU
 	};
 
 	private String surname, lastname;
@@ -65,6 +67,14 @@ public class Person implements Inspectable {
 				UI.write("I don't know this person.");
 				break;
 			}
+			break;
+		}
+	}
+
+	public void ask(QuestionType type, Time time) {
+		switch (type) {
+		case WHERE_WERE_YOU:
+			Event event = calendar.get(time);
 			break;
 		}
 	}
