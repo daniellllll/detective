@@ -97,17 +97,6 @@ public class Generator {
 		return persons;
 	}
 
-	private static boolean nameExists(Person[] persons, String lastname) {
-		for (Person person : persons) {
-			if (person != null) {
-				if (person.getLastname().equals(lastname)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
 	private static boolean nameExists(Person[] persons, String surname,
 			String lastname) {
 		for (Person person : persons) {
