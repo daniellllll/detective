@@ -25,6 +25,18 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return activity.toString() + " @ " + place.getName();
+		switch (activity) {
+		case WORKING:
+			return "I was working at " + place.getName();
+		case SLEEPING:
+			return "I was sleeping at " + place.getName();
+		case BREAKFAST:
+			return "I had breakfast at " + place.getName();
+		case LUNCH:
+			return "I had lunch at " + place.getName();
+		case READING_A_BOOK:
+			return "I was reading a book at " + place.getName();
+		}
+		return null;
 	}
 }

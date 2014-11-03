@@ -3,12 +3,15 @@ package ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
-import persons.Person.QuestionType;
+import main.Environment;
+import persons.Person;
+import persons.questions.Question;
+import persons.questions.RelationshipQuestion;
 
 public class UI {
 
 	private static UIListener listener;
+	private static Environment env;
 
 	public static void write(String text) {
 		System.out.println(text);
@@ -33,17 +36,29 @@ public class UI {
 		case "take":
 			listener.onTake(input);
 			break;
-		case "ask":
+		case "ask":			
+			Person person = env.getPerson(input);
+			if (person == null) {
+				UI.write("This Person isn't here!");
+				return;
+			}
 			String question = read();
-			QuestionType type = null;
+
+			// Relationship question
 			if (question.startsWith("do you know")) {
-				question = question.substring(12);
-				type = QuestionType.DO_YOU_KNOW;
-			} else {
+				Person b = env.getPerson(question.substring(12));
+				if (b == null) {
+					UI.write("This person isn't here!");
+					return;
+				}
+				Question q = new RelationshipQuestion(person, b);
+				listener.onAsk(person, q);
+			}
+
+			else {
 				write("Unknown question.");
 				return;
 			}
-			listener.onAsk(input, type, question);
 			break;
 		}
 	}
@@ -59,7 +74,11 @@ public class UI {
 		return null;
 	}
 
-	public static void addUIListener(UIListener uilistener) {
+	public static void setUIListener(UIListener uilistener) {
 		listener = uilistener;
+	}
+
+	public static void setEnvironment(Environment environment) {
+		env = environment;
 	}
 }

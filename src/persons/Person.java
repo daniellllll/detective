@@ -1,11 +1,10 @@
 package persons;
 
+import persons.questions.Question;
 import places.Place;
-import time.Time;
 import ui.UI;
 import interfaces.Inspectable;
 import calendar.Calendar;
-import calendar.Event;
 
 public class Person implements Inspectable {
 
@@ -48,37 +47,8 @@ public class Person implements Inspectable {
 		this.gender = gender;
 	}
 
-	public void ask(QuestionType type, Person person) {
-		switch (type) {
-		case DO_YOU_KNOW:
-			switch (getRelationship(person)) {
-			case FATHER:
-				UI.write("Yes, he's my father.");
-				break;
-			case MOTHER:
-				UI.write("Yes, she's my mother.");
-				break;
-			case SIBLING:
-				if (person.getGender() == Gender.male) {
-					UI.write("Yes, he's my brother.");
-				} else {
-					UI.write("Yes, she's my sister.");
-				}
-				break;
-			default:
-				UI.write("I don't know this person.");
-				break;
-			}
-			break;
-		}
-	}
-
-	public void ask(QuestionType type, Time time) {
-		switch (type) {
-		case WHERE_WERE_YOU:
-			Event event = calendar.get(time);
-			break;
-		}
+	public void ask(Question question) {
+		question.answer();
 	}
 
 	public Relationship getRelationship(Person person) {

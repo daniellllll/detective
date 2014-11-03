@@ -5,7 +5,7 @@ import interfaces.Inspectable;
 import interfaces.Useable;
 import items.*;
 import persons.Person;
-import persons.Person.QuestionType;
+import persons.questions.Question;
 import places.*;
 import player.Player;
 import time.Time;
@@ -13,10 +13,9 @@ import ui.UI;
 import ui.UIListener;
 
 public class Control implements UIListener {
-	private Inspectable inspectables[];
-	private Useable useables[];
 	private Person persons[];
 	private Player player;
+	private Environment env;
 
 	public static void main(String[] args) {
 		new Control();
@@ -42,9 +41,11 @@ public class Control implements UIListener {
 		watch.insertInto(pub);
 
 		player = new Player();
+		env = new Environment(player);
 		player.goTo(pub);
 
-		UI.addUIListener(this);
+		UI.setUIListener(this);
+		UI.setEnvironment(env);
 		UI.write("You are in the Pub.");
 		while (true) {
 			UI.waitForInput();
@@ -53,8 +54,7 @@ public class Control implements UIListener {
 
 	@Override
 	public void onInspect(String name) {
-		updateInspectables();
-		for (Inspectable insp : inspectables) {
+		for (Inspectable insp : env.getInspectables()) {
 			if (insp.getName().equals(name)) {
 				insp.inspect();
 				return;
@@ -65,9 +65,8 @@ public class Control implements UIListener {
 
 	@Override
 	public void onUse(String item1, String item2) {
-		updateUseables();
 		Useable a = null, b = null;
-		for (Useable useable : useables) {
+		for (Useable useable : env.getUseables()) {
 			if (useable.getName().equals(item1)) {
 				a = useable;
 			} else if (useable.getName().equals(item2)) {
@@ -83,8 +82,7 @@ public class Control implements UIListener {
 
 	@Override
 	public void onTake(String name) {
-		updateInspectables();
-		for (Inspectable insp : inspectables) {
+		for (Inspectable insp : env.getInspectables()) {
 			if (insp.getName().equals(name)) {
 				if (insp instanceof Item) {
 					((Item) insp).insertInto(player);
@@ -95,57 +93,9 @@ public class Control implements UIListener {
 		UI.write("There is no \"" + name + "\"");
 	}
 
-	private void updateInspectables() {
-		inspectables = new Inspectable[2
-				+ player.getPlace().getInspectables().length
-				+ player.getItems().length];
-		inspectables[0] = player.getPlace();
-		inspectables[1] = player;
-		int i = 2;
-		for (Inspectable insp : player.getPlace().getInspectables()) {
-			inspectables[i++] = insp;
-		}
-		for (Item item : player.getItems()) {
-			inspectables[i++] = item;
-		}
-	}
-
-	private void updateUseables() {
-		useables = new Useable[player.getPlace().getUseables().length
-				+ player.getItems().length];
-		int i = 0;
-		for (Useable u : player.getPlace().getUseables()) {
-			useables[i++] = u;
-		}
-		for (Item item : player.getItems()) {
-			useables[i++] = item;
-		}
-	}
-
-	private Person getAvailablePerson(String name) {
-		for (Person p : player.getPlace().getPersons()) {
-			if (p.getName().equals(name)) {
-				return p;
-			}
-		}
-		return null;
-	}
-
 	@Override
-	public void onAsk(String name, QuestionType type, String question) {
-		Person personA = getAvailablePerson(name);
-		Person personB = getAvailablePerson(question);
-		if (personA == null) {
-			UI.write(name + " is not here!");
-			return;
-		}
-		if (personB == null) {
-			UI.write(name + " is not here!");
-			return;
-		}
-
-		personA.ask(type, personB);
-
+	public void onAsk(Person person, Question question) {
+		person.ask(question);
 	}
 
 }

@@ -1,6 +1,7 @@
 package ui;
 
-import persons.Person.QuestionType;
+import persons.Person;
+import persons.questions.Question;
 
 public interface UIListener {
 
@@ -10,5 +11,5 @@ public interface UIListener {
 
 	public void onTake(String name);
 	
-	public void onAsk(String name, QuestionType type, String question);
+	public void onAsk(Person person, Question question);
 }
