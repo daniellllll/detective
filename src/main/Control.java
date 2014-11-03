@@ -24,7 +24,7 @@ public class Control implements UIListener {
 
 	public Control() {
 		// set time
-		Time.set(new Time(1815, 3, 21, 12, 0));
+		Time.setStartTime(new Time(1815, 3, 21, 12, 0));
 
 		persons = PersonsGenerator.generate();
 		Place pub = new Pub("Pub");
@@ -136,11 +136,11 @@ public class Control implements UIListener {
 		Person personA = getAvailablePerson(name);
 		Person personB = getAvailablePerson(question);
 		if (personA == null) {
-			UI.write(personA.getName() + " is not here!");
+			UI.write(name + " is not here!");
 			return;
 		}
 		if (personB == null) {
-			UI.write(personB.getName() + " is not here!");
+			UI.write(name + " is not here!");
 			return;
 		}
 

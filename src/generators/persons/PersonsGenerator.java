@@ -1,8 +1,13 @@
 package generators.persons;
 
+import generators.calendar.BarkeeperCalendarGenerator;
+import generators.calendar.CalendarGenerator;
+import time.Time;
 import utils.Random;
 import persons.Person;
 import persons.Person.Gender;
+import places.Cabin;
+import places.Pub;
 
 public class PersonsGenerator {
 
@@ -88,13 +93,19 @@ public class PersonsGenerator {
 							Gender.female }), man, woman);
 		}
 
-		// Nachname auswählen
-		// Anzahl der Generationen festlegen
-		// alle Familien der 1. Generation erzeugen (nur Geschwister)
-		// Familien heiraten untereinander
-		// Paare bekommen Kinder
-		// Kinder heiraten jemanden aus der eigenen Generation (nicht aus
-		// Family)
+		// generate Jobs, Calendars
+		for (Person p : persons) {
+			p.setWorkplace(new Pub("pub"));
+			p.setResidence(new Cabin("cabin"));
+
+			Time start = new Time(Time.getStartTime().toSeconds() - 60 * 60
+					* 24 * 7);
+			Time end = Time.getStartTime();
+			CalendarGenerator generator = new BarkeeperCalendarGenerator(start,
+					end, p);
+			generator.generate();
+			break;
+		}
 		return persons;
 	}
 

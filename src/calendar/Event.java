@@ -1,33 +1,30 @@
 package calendar;
 
-import persons.Person;
 import places.Place;
 
 public class Event {
-	private enum Activity {
-		WORKING
+	public enum Activity {
+		WORKING, SLEEPING, BREAKFAST, LUNCH, READING_A_BOOK
 	}
 
 	private Place place;
-	private Person persons[];
 	private Activity activity;
 
-	public Event(Activity activity, Place place, Person persons[]) {
+	public Event(Activity activity, Place place) {
 		this.activity = activity;
 		this.place = place;
-		this.persons = persons;
 	}
 
 	public Place getPlace() {
 		return place;
 	}
 
-	public Person[] getPersons() {
-		return persons;
-	}
-
 	public Activity getActivity() {
 		return activity;
 	}
-	
+
+	@Override
+	public String toString() {
+		return activity.toString() + " @ " + place.getName();
+	}
 }

@@ -38,4 +38,14 @@ public class Calendar {
 		return null;
 	}
 
+	@Override
+	public String toString() {
+		String str = "";
+		for (Entry e : calendar) {
+			str += "[" + e.from.toString() + " - " + e.to.toString() + "] "
+					+ e.event.toString() + "\n";
+		}
+		return str;
+	}
+
 }

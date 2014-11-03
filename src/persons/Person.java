@@ -1,5 +1,6 @@
 package persons;
 
+import places.Place;
 import time.Time;
 import ui.UI;
 import interfaces.Inspectable;
@@ -23,6 +24,7 @@ public class Person implements Inspectable {
 	private Calendar calendar;
 	private Person father, mother, siblings[], partner;
 	private Gender gender;
+	private Place residence, workplace;
 
 	public enum Gender {
 		male, female
@@ -161,6 +163,22 @@ public class Person implements Inspectable {
 
 	public Calendar getHistory() {
 		return calendar;
+	}
+
+	public Place getResidence() {
+		return residence;
+	}
+
+	public void setResidence(Place residence) {
+		this.residence = residence;
+	}
+
+	public Place getWorkplace() {
+		return workplace;
+	}
+
+	public void setWorkplace(Place workplace) {
+		this.workplace = workplace;
 	}
 
 	@Override

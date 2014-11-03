@@ -2,12 +2,21 @@ package time;
 
 public class Time {
 	private int year, month, day, hour, minute;
-	private static long starttime, reftime;
+	private static long reftime;
+	private static Time starttime;
 
 	public Time(int year, int month, int day, int hour, int minute) {
 		this.year = year;
 		this.month = month;
 		this.day = day;
+		this.hour = hour;
+		this.minute = minute;
+	}
+
+	public Time(int hour, int minute) {
+		this.year = 0;
+		this.month = 0;
+		this.day = 0;
 		this.hour = hour;
 		this.minute = minute;
 	}
@@ -52,7 +61,20 @@ public class Time {
 
 	@Override
 	public String toString() {
-		return year + "." + month + "." + day + " " + hour + ":" + minute;
+		String strMonth = Integer.toString(month);
+		String strDay = Integer.toString(month);
+		String strHour = Integer.toString(month);
+		String strMinute = Integer.toString(month);
+		if (strMonth.length() == 1)
+			strMonth = "0" + strMonth;
+		if (strDay.length() == 1)
+			strDay = "0" + strDay;
+		if (strHour.length() == 1)
+			strHour = "0" + strHour;
+		if (strMinute.length() == 1)
+			strMinute = "0" + strMinute;
+		return year + "." + strMonth + "." + strDay + " " + strHour + ":"
+				+ strMinute;
 	}
 
 	static {
@@ -60,15 +82,19 @@ public class Time {
 		reftime = date.getTime() / 1000;
 	}
 
-	public static void set(Time time) {
-		starttime += time.toSeconds();
+	public static void setStartTime(Time time) {
+		starttime = time;
+	}
+
+	public static Time getStartTime() {
+		return starttime;
 	}
 
 	public static Time now() {
 		java.util.Date date = new java.util.Date();
 		long seconds = date.getTime() / 1000 - reftime;
 		seconds *= 60;
-		return new Time(seconds + starttime);
+		return new Time(seconds + starttime.toSeconds());
 	}
 
 }
