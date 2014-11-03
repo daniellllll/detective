@@ -20,8 +20,9 @@ public abstract class CalendarGenerator {
 	protected void generateCalendar(Calendar dailyRoutine) {
 		Calendar calendar = person.getCalendar();
 
-		Event actEvent = dailyRoutine.get(from);
-		Event lastEvent = null;
+		Time first = new Time(from.getHour(), from.getMinute());
+		Event actEvent = dailyRoutine.get(first);
+		Event lastEvent = actEvent;
 		Time startTime = new Time(from.toSeconds());
 
 		for (long t = from.toSeconds(); t <= to.toSeconds(); t += 60) {
@@ -29,8 +30,8 @@ public abstract class CalendarGenerator {
 			Time t2 = new Time(t1.getHour(), t1.getMinute());
 			actEvent = dailyRoutine.get(t2);
 			if (actEvent != lastEvent) {
-				calendar.add(actEvent, startTime, new Time(t));
-				startTime = new Time(t + 60);
+				calendar.add(lastEvent, startTime, new Time(t - 60));
+				startTime = new Time(t);
 				lastEvent = actEvent;
 			}
 		}

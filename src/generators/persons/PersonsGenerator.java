@@ -104,7 +104,6 @@ public class PersonsGenerator {
 			CalendarGenerator generator = new BarkeeperCalendarGenerator(start,
 					end, p);
 			generator.generate();
-			break;
 		}
 		return persons;
 	}

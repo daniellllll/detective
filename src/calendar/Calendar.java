@@ -42,8 +42,7 @@ public class Calendar {
 	public String toString() {
 		String str = "";
 		for (Entry e : calendar) {
-			str += "[" + e.from.toString() + " - " + e.to.toString() + "] "
-					+ e.event.toString() + "\n";
+			str += "[" + e.from + " - " + e.to + "] " + e.event + "\n";
 		}
 		return str;
 	}

@@ -62,9 +62,9 @@ public class Time {
 	@Override
 	public String toString() {
 		String strMonth = Integer.toString(month);
-		String strDay = Integer.toString(month);
-		String strHour = Integer.toString(month);
-		String strMinute = Integer.toString(month);
+		String strDay = Integer.toString(day);
+		String strHour = Integer.toString(hour);
+		String strMinute = Integer.toString(minute);
 		if (strMonth.length() == 1)
 			strMonth = "0" + strMonth;
 		if (strDay.length() == 1)

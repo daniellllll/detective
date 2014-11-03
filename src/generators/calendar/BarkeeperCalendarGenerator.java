@@ -25,7 +25,7 @@ public class BarkeeperCalendarGenerator extends CalendarGenerator {
 		dailyRoutine.add(breakfast, new Time(10, 1), new Time(11, 0));
 		dailyRoutine.add(bookreading, new Time(11, 1), new Time(14, 0));
 		dailyRoutine.add(lunch, new Time(14, 1), new Time(15, 0));
-		dailyRoutine.add(lunch, new Time(15, 1), new Time(23, 59));
+		dailyRoutine.add(working, new Time(15, 1), new Time(23, 59));
 	}
 
 	@Override
