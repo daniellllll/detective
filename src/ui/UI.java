@@ -3,10 +3,13 @@ package ui;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+
 import main.Environment;
 import persons.Person;
+import persons.questions.PlaceQuestion;
 import persons.questions.Question;
 import persons.questions.RelationshipQuestion;
+import time.Time;
 
 public class UI {
 
@@ -36,7 +39,7 @@ public class UI {
 		case "take":
 			listener.onTake(input);
 			break;
-		case "ask":			
+		case "ask":
 			Person person = env.getPerson(input);
 			if (person == null) {
 				UI.write("This Person isn't here!");
@@ -52,6 +55,13 @@ public class UI {
 					return;
 				}
 				Question q = new RelationshipQuestion(person, b);
+				listener.onAsk(person, q);
+			}
+
+			// Place question
+			if (question.startsWith("where were you at")) {
+				Time time = new Time(question.substring(18));
+				Question q = new PlaceQuestion(person, time);
 				listener.onAsk(person, q);
 			}
 

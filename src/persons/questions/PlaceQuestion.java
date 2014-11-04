@@ -1,7 +1,9 @@
 package persons.questions;
 
+import calendar.Event;
 import persons.Person;
 import time.Time;
+import ui.UI;
 
 public class PlaceQuestion implements Question {
 	private Person person;
@@ -14,7 +16,11 @@ public class PlaceQuestion implements Question {
 
 	@Override
 	public void answer() {
-		// TODO Auto-generated method stub
-
+		Event event = person.getCalendar().get(time);
+		if (event == null) {
+			UI.write("I don't know.");
+		} else {
+			UI.write(event.toString());
+		}
 	}
 }

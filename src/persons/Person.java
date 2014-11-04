@@ -12,10 +12,6 @@ public class Person implements Inspectable {
 		FATHER, MOTHER, SIBLING, FRIEND, PARTNER
 	}
 
-	public enum QuestionType {
-		DO_YOU_KNOW, WHERE_WERE_YOU
-	};
-
 	private String surname, lastname;
 	private String haircolor;
 	private String characteristic;

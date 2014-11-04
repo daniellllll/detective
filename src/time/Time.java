@@ -34,6 +34,18 @@ public class Time {
 		seconds -= minute * 60L;
 	}
 
+	public Time(String str) {		
+		String datestr = str.split(" ")[0];
+		String timestr = str.split(" ")[1];
+		String datedata[] = datestr.split("\\.");
+		String timedata[] = timestr.split(":");
+		year = Integer.parseInt(datedata[0]);
+		month = Integer.parseInt(datedata[1]);
+		day = Integer.parseInt(datedata[2]);
+		hour = Integer.parseInt(timedata[0]);
+		minute = Integer.parseInt(timedata[1]);
+	}
+
 	public int getYear() {
 		return year;
 	}
