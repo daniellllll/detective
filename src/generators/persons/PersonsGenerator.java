@@ -2,12 +2,15 @@ package generators.persons;
 
 import generators.calendar.BarkeeperCalendarGenerator;
 import generators.calendar.CalendarGenerator;
+import generators.places.ResidenceGenerator;
 import time.Time;
 import utils.Random;
 import persons.Person;
 import persons.Person.Gender;
 import places.Cabin;
+import places.Place;
 import places.Pub;
+import places.Residence;
 
 public class PersonsGenerator {
 
@@ -93,10 +96,29 @@ public class PersonsGenerator {
 							Gender.female }), man, woman);
 		}
 
+		// generate residences
+		int i;
+		for (i = 0; i + 2 < persons.length; i += 3) {
+			Person residents[] = new Person[3];
+			residents[0] = persons[i];
+			residents[1] = persons[i + 1];
+			residents[2] = persons[i + 2];
+			Residence residence = ResidenceGenerator.generate(residents);
+			residents[0].setResidence((Place) residence);
+			residents[1].setResidence((Place) residence);
+			residents[2].setResidence((Place) residence);
+		}
+		int rest = persons.length - i;
+		if (rest > 0) {
+			Person residents[] = new Person[rest];
+			for (int j = 0; j < rest; j++) {
+				residents[j] = persons[i++];
+			}
+		}
+
 		// generate Jobs, Calendars
 		for (Person p : persons) {
 			p.setWorkplace(new Pub("pub"));
-			p.setResidence(new Cabin("cabin"));
 
 			Time start = new Time(Time.getStartTime().toSeconds() - 60 * 60
 					* 24 * 7);
