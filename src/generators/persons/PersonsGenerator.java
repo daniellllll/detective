@@ -114,6 +114,10 @@ public class PersonsGenerator {
 			for (int j = 0; j < rest; j++) {
 				residents[j] = persons[i++];
 			}
+			Residence residence = ResidenceGenerator.generate(residents);
+			for (int j = 0; j < rest; j++) {
+				residents[j].setResidence((Place) residence);
+			}
 		}
 
 		// generate Jobs, Calendars

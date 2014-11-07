@@ -9,6 +9,7 @@ import persons.Person;
 import persons.questions.PlaceQuestion;
 import persons.questions.Question;
 import persons.questions.RelationshipQuestion;
+import persons.questions.ResidenceQuestion;
 import time.Time;
 
 public class UI {
@@ -62,6 +63,12 @@ public class UI {
 			if (question.startsWith("where were you at")) {
 				Time time = new Time(question.substring(18));
 				Question q = new PlaceQuestion(person, time);
+				listener.onAsk(person, q);
+			}
+			
+			// Residence question
+			if (question.equals("where do you live")){
+				Question q = new ResidenceQuestion(person);
 				listener.onAsk(person, q);
 			}
 
