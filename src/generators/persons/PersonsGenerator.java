@@ -2,15 +2,16 @@ package generators.persons;
 
 import generators.calendar.BarkeeperCalendarGenerator;
 import generators.calendar.CalendarGenerator;
+import generators.calendar.ShopassistantCalendarGenerator;
 import generators.places.ResidenceGenerator;
 import time.Time;
 import utils.Random;
 import persons.Person;
 import persons.Person.Gender;
-import places.Cabin;
 import places.Place;
 import places.Pub;
 import places.Residence;
+import places.Supermarket;
 
 public class PersonsGenerator {
 
@@ -121,16 +122,30 @@ public class PersonsGenerator {
 		}
 
 		// generate Jobs, Calendars
-		for (Person p : persons) {
-			p.setWorkplace(new Pub("pub"));
+		Place supermarket = new Supermarket("supermarket");
+		Person randpersons[] = new Person[persons.length];
+		utils.Random.getUniqueElems(persons, randpersons);
 
+		i = 0;
+		for (Person p : randpersons) {
 			Time start = new Time(Time.getStartTime().toSeconds() - 60 * 60
 					* 24 * 7);
 			Time end = Time.getStartTime();
-			CalendarGenerator generator = new BarkeeperCalendarGenerator(start,
-					end, p);
+			CalendarGenerator generator = null;
+
+			if (i < 3) {
+				p.setWorkplace(supermarket);
+				generator = new ShopassistantCalendarGenerator(start, end, p);
+			} else {
+				p.setWorkplace(new Pub("pub"));
+				generator = new BarkeeperCalendarGenerator(start, end, p);
+			}
+
 			generator.generate();
+
+			i++;
 		}
+		
 		return persons;
 	}
 
