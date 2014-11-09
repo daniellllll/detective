@@ -196,6 +196,42 @@ public class WorldGenerator {
 				} else if (place instanceof Bakery) {
 					assignPersonsToJob(persons, 2, place,
 							BakerCalendarGenerator.class, start, end);
+				} else if (place instanceof ButchersShop) {
+					assignPersonsToJob(persons, 2, place,
+							ButcherCalendarGenerator.class, start, end);
+				} else if (place instanceof Brothel) {
+					assignPersonsToJob(persons, 4, place,
+							ProstituteCalendarGenerator.class, start, end);
+				} else if (place instanceof FireDepartment) {
+					assignPersonsToJob(persons, 5, place,
+							FirefighterCalendarGenerator.class, start, end);
+				} else if (place instanceof GunSmithery) {
+					assignPersonsToJob(persons, 1, place,
+							GunsmithCalendarGenerator.class, start, end);
+				} else if (place instanceof Harbor) {
+					assignPersonsToJob(persons, 11, place,
+							DockworkerCalendarGenerator.class, start, end);
+				} else if (place instanceof PoliceDepartment) {
+					assignPersonsToJob(persons, 5, place,
+							PoliceofficerCalendarGenerator.class, start, end);
+				} else if (place instanceof Pub) {
+					assignPersonsToJob(persons, 2, place,
+							BarkeeperCalendarGenerator.class, start, end);
+				} else if (place instanceof Salon) {
+					assignPersonsToJob(persons, 2, place,
+							HairdresserCalendarGenerator.class, start, end);
+				} else if (place instanceof Tailoring) {
+					assignPersonsToJob(persons, 1, place,
+							TailorCalendarGenerator.class, start, end);
+				} else if (place instanceof Theatre) {
+					assignPersonsToJob(persons, 2, place,
+							ActorCalendarGenerator.class, start, end);
+				} else if (place instanceof TownHall) {
+					assignPersonsToJob(persons, 1, place,
+							MayorCalendarGenerator.class, start, end);
+				} else if (place instanceof Boat) {
+					assignPersonsToJob(persons, 7, place,
+							FisherCalendarGenerator.class, start, end);
 				}
 			}
 		}
@@ -218,43 +254,6 @@ public class WorldGenerator {
 			}
 		}
 	}
-
-	/*
-	 * private static void generateWorkplacesAndCalendars() { Person persons[] =
-	 * Environment.getAllPersons(); Person randpersons[] = new
-	 * Person[persons.length]; utils.Random.getUniqueElems(persons,
-	 * randpersons);
-	 * 
-	 * int i = 0; for (Person p : randpersons) { Time start = new
-	 * Time(Time.getStartTime().toSeconds() - 60 * 60 24 * 7); Time end =
-	 * Time.getStartTime(); CalendarGenerator generator = null;
-	 * 
-	 * if (i < 3) { p.setWorkplace(supermarket); generator = new
-	 * ShopassistantCalendarGenerator(start, end, p); } else if (i < 4) {
-	 * p.setWorkplace(park); generator = new GardenerCalendarGenerator(start,
-	 * end, p); } else if (i < 14) { p.setWorkplace(harbor); generator = new
-	 * DockworkerCalendarGenerator(start, end, p); } else if (i < 18) {
-	 * p.setWorkplace(salon); generator = new
-	 * HairdresserCalendarGenerator(start, end, p); } else if (i < 21) {
-	 * p.setWorkplace(bakery); generator = new BakerCalendarGenerator(start,
-	 * end, p); } else if (i < 24) { p.setWorkplace(butchersshop); generator =
-	 * new ButcherCalendarGenerator(start, end, p); } else if (i < 25) {
-	 * p.setWorkplace(gunSmithery); generator = new
-	 * GunsmithCalendarGenerator(start, end, p); } else if (i < 27) {
-	 * p.setWorkplace(tailoring); generator = new TailorCalendarGenerator(start,
-	 * end, p); } else if (i < 33) { p.setWorkplace(boatsalty); generator = new
-	 * FisherCalendarGenerator(start, end, p); } else if (i < 38) {
-	 * p.setWorkplace(boatsandy); generator = new FisherCalendarGenerator(start,
-	 * end, p); } else if (i < 43) { p.setWorkplace(boatcalaloo); generator =
-	 * new FisherCalendarGenerator(start, end, p); } else if (i < 48) {
-	 * p.setWorkplace(brothel); generator = new
-	 * ProstituteCalendarGenerator(start, end, p); } else { p.setWorkplace(pub);
-	 * generator = new BarkeeperCalendarGenerator(start, end, p); }
-	 * 
-	 * generator.generate();
-	 * 
-	 * i++; } }
-	 */
 
 	private static boolean nameExists(Person[] persons, String surname,
 			String lastname) {
