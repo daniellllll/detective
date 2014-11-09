@@ -6,10 +6,7 @@ import java.io.InputStreamReader;
 
 import main.Environment;
 import persons.Person;
-import persons.questions.PlaceQuestion;
-import persons.questions.Question;
-import persons.questions.RelationshipQuestion;
-import persons.questions.ResidenceQuestion;
+import persons.questions.*;
 import time.Time;
 
 public class UI {
@@ -65,10 +62,16 @@ public class UI {
 				Question q = new PlaceQuestion(person, time);
 				listener.onAsk(person, q);
 			}
-			
+
 			// Residence question
-			if (question.equals("where do you live")){
+			if (question.equals("where do you live")) {
 				Question q = new ResidenceQuestion(person);
+				listener.onAsk(person, q);
+			}
+
+			// Workplace question
+			if (question.equals("where do you work")) {
+				Question q = new WorkplaceQuestion(person);
 				listener.onAsk(person, q);
 			}
 
