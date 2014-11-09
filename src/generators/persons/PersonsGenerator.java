@@ -1,17 +1,12 @@
 package generators.persons;
 
-import generators.calendar.BarkeeperCalendarGenerator;
-import generators.calendar.CalendarGenerator;
-import generators.calendar.ShopassistantCalendarGenerator;
+import generators.calendar.*;
 import generators.places.ResidenceGenerator;
 import time.Time;
 import utils.Random;
 import persons.Person;
 import persons.Person.Gender;
-import places.Place;
-import places.Pub;
-import places.Residence;
-import places.Supermarket;
+import places.*;
 
 public class PersonsGenerator {
 
@@ -123,6 +118,18 @@ public class PersonsGenerator {
 
 		// generate Jobs, Calendars
 		Place supermarket = new Supermarket("supermarket");
+		Place pub = new Pub("pub");
+		Place park = new Park("park");
+		Place harbor = new Harbor("harbor");
+		Place salon = new Salon("salon");
+		Place bakery = new Bakery("bakery");
+		Place butchersshop = new ButchersShop("butchers shop");
+		Place gunSmithery = new GunSmithery("gunsmithery");
+		Place tailoring = new Tailoring("tailoring");
+		Place boatsalty = new Boat("boat Salty");
+		Place boatsandy = new Boat("boat Sandy");
+		Place boatcalaloo = new Boat("boat Calaloo");
+		Place brothel = new Brothel("brothel");
 		Person randpersons[] = new Person[persons.length];
 		utils.Random.getUniqueElems(persons, randpersons);
 
@@ -136,8 +143,41 @@ public class PersonsGenerator {
 			if (i < 3) {
 				p.setWorkplace(supermarket);
 				generator = new ShopassistantCalendarGenerator(start, end, p);
+			} else if (i < 4) {
+				p.setWorkplace(park);
+				generator = new GardenerCalendarGenerator(start, end, p);
+			} else if (i < 14) {
+				p.setWorkplace(harbor);
+				generator = new DockworkerCalendarGenerator(start, end, p);
+			} else if (i < 18) {
+				p.setWorkplace(salon);
+				generator = new HairdresserCalendarGenerator(start, end, p);
+			} else if (i < 21) {
+				p.setWorkplace(bakery);
+				generator = new BakerCalendarGenerator(start, end, p);
+			} else if (i < 24) {
+				p.setWorkplace(butchersshop);
+				generator = new ButcherCalendarGenerator(start, end, p);
+			} else if (i < 25) {
+				p.setWorkplace(gunSmithery);
+				generator = new GunsmithCalendarGenerator(start, end, p);
+			} else if (i < 27) {
+				p.setWorkplace(tailoring);
+				generator = new TailorCalendarGenerator(start, end, p);
+			} else if (i < 33) {
+				p.setWorkplace(boatsalty);
+				generator = new FisherCalendarGenerator(start, end, p);
+			} else if (i < 38) {
+				p.setWorkplace(boatsandy);
+				generator = new FisherCalendarGenerator(start, end, p);
+			} else if (i < 43) {
+				p.setWorkplace(boatcalaloo);
+				generator = new FisherCalendarGenerator(start, end, p);
+			} else if (i < 48) {
+				p.setWorkplace(brothel);
+				generator = new ProstituteCalendarGenerator(start, end, p);
 			} else {
-				p.setWorkplace(new Pub("pub"));
+				p.setWorkplace(pub);
 				generator = new BarkeeperCalendarGenerator(start, end, p);
 			}
 
@@ -145,7 +185,7 @@ public class PersonsGenerator {
 
 			i++;
 		}
-		
+
 		return persons;
 	}
 

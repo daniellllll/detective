@@ -42,15 +42,6 @@ public class Environment {
 		}
 		return inspectables;
 	}
-
-	public Person[] getPersons() {
-		Person[] persons = new Person[player.getPlace().getPersons().length];
-		int i = 0;
-		for (Person p : player.getPlace().getPersons()) {
-			persons[i++] = p;
-		}
-		return persons;
-	}
 	
 	public Person getPerson(String fullname) {		
 		for (Person p : player.getPlace().getPersons()) {
