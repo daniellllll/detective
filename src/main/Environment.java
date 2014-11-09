@@ -4,16 +4,35 @@ import interfaces.Inspectable;
 import interfaces.Useable;
 import items.Item;
 import persons.Person;
+import places.Place;
 import player.Player;
 
 public class Environment {
-	private Player player;
+	private static Player player;
+	private static Person[] persons;
+	private static Place[] places;
 
-	public Environment(Player player) {
-		this.player = player;
+	public static void setPlayer(Player p) {
+		player = p;
 	}
 
-	public Useable[] getUseables() {
+	public static void setPersons(Person p[]) {
+		persons = p;
+	}
+
+	public static Person[] getAllPersons() {
+		return persons;
+	}
+
+	public static void setPlaces(Place p[]) {
+		places = p;
+	}
+
+	public static Place[] getAllPlaces() {
+		return places;
+	}
+
+	public static Useable[] getUseables() {
 		Useable useables[] = new Useable[player.getPlace().getUseables().length
 				+ player.getItems().length];
 		int i = 0;
@@ -27,7 +46,7 @@ public class Environment {
 		return useables;
 	}
 
-	public Inspectable[] getInspectables() {
+	public static Inspectable[] getInspectables() {
 		Inspectable[] inspectables = new Inspectable[2
 				+ player.getPlace().getInspectables().length
 				+ player.getItems().length];
@@ -42,10 +61,10 @@ public class Environment {
 		}
 		return inspectables;
 	}
-	
-	public Person getPerson(String fullname) {		
+
+	public static Person getPerson(String fullname) {
 		for (Person p : player.getPlace().getPersons()) {
-			if(p.getName().equals(fullname)){
+			if (p.getName().equals(fullname)) {
 				return p;
 			}
 		}

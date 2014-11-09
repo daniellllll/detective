@@ -12,7 +12,6 @@ import time.Time;
 public class UI {
 
 	private static UIListener listener;
-	private static Environment env;
 
 	public static void write(String text) {
 		System.out.println(text);
@@ -38,7 +37,7 @@ public class UI {
 			listener.onTake(input);
 			break;
 		case "ask":
-			Person person = env.getPerson(input);
+			Person person = Environment.getPerson(input);
 			if (person == null) {
 				UI.write("This Person isn't here!");
 				return;
@@ -47,7 +46,7 @@ public class UI {
 
 			// Relationship question
 			if (question.startsWith("do you know")) {
-				Person b = env.getPerson(question.substring(12));
+				Person b = Environment.getPerson(question.substring(12));
 				if (b == null) {
 					UI.write("This person isn't here!");
 					return;
@@ -96,9 +95,5 @@ public class UI {
 
 	public static void setUIListener(UIListener uilistener) {
 		listener = uilistener;
-	}
-
-	public static void setEnvironment(Environment environment) {
-		env = environment;
 	}
 }

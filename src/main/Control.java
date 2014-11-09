@@ -1,6 +1,6 @@
 package main;
 
-import generators.persons.PersonsGenerator;
+import generators.WorldGenerator;
 import interfaces.Inspectable;
 import interfaces.Useable;
 import items.*;
@@ -13,9 +13,7 @@ import ui.UI;
 import ui.UIListener;
 
 public class Control implements UIListener {
-	private Person persons[];
 	private Player player;
-	private Environment env;
 
 	public static void main(String[] args) {
 		new Control();
@@ -25,9 +23,9 @@ public class Control implements UIListener {
 		// set time
 		Time.setStartTime(new Time(1815, 3, 21, 12, 0));
 
-		persons = PersonsGenerator.generate();
+		WorldGenerator.generate();
 		Place pub = new Pub("Pub");
-		for (Person p : persons) {
+		for (Person p : Environment.getAllPersons()) {
 			pub.addPerson(p);
 		}
 
@@ -41,11 +39,10 @@ public class Control implements UIListener {
 		watch.insertInto(pub);
 
 		player = new Player();
-		env = new Environment(player);
+		Environment.setPlayer(player);
 		player.goTo(pub);
 
 		UI.setUIListener(this);
-		UI.setEnvironment(env);
 		UI.write("You are in the Pub.");
 		while (true) {
 			UI.waitForInput();
@@ -54,7 +51,7 @@ public class Control implements UIListener {
 
 	@Override
 	public void onInspect(String name) {
-		for (Inspectable insp : env.getInspectables()) {
+		for (Inspectable insp : Environment.getInspectables()) {
 			if (insp.getName().equals(name)) {
 				insp.inspect();
 				return;
@@ -66,7 +63,7 @@ public class Control implements UIListener {
 	@Override
 	public void onUse(String item1, String item2) {
 		Useable a = null, b = null;
-		for (Useable useable : env.getUseables()) {
+		for (Useable useable : Environment.getUseables()) {
 			if (useable.getName().equals(item1)) {
 				a = useable;
 			} else if (useable.getName().equals(item2)) {
@@ -82,7 +79,7 @@ public class Control implements UIListener {
 
 	@Override
 	public void onTake(String name) {
-		for (Inspectable insp : env.getInspectables()) {
+		for (Inspectable insp : Environment.getInspectables()) {
 			if (insp.getName().equals(name)) {
 				if (insp instanceof Item) {
 					((Item) insp).insertInto(player);
