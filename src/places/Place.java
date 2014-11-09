@@ -15,11 +15,13 @@ public abstract class Place implements Inspectable, ItemContainer {
 	private String name;
 	private List<Person> persons;
 	private List<Item> items;
+	private List<Place> reachablePlaces;
 
 	public Place(String name) {
 		this.name = name;
 		persons = new ArrayList<>();
 		items = new ArrayList<>();
+		reachablePlaces = new ArrayList<>();
 	}
 
 	public void addPerson(Person person) {
@@ -54,6 +56,19 @@ public abstract class Place implements Inspectable, ItemContainer {
 			pers[i++] = p;
 		}
 		return pers;
+	}
+
+	public Place[] getReachablePlaces() {
+		Place places[] = new Place[reachablePlaces.size()];
+		int i = 0;
+		for (Place p : reachablePlaces) {
+			places[i++] = p;
+		}
+		return places;
+	}
+	
+	public void addReachablePlace(Place place){
+		reachablePlaces.add(place);
 	}
 
 	@Override
