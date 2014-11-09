@@ -1,21 +1,19 @@
 package generators;
 
-import java.awt.JobAttributes;
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
 import main.Environment;
 import generators.calendar.*;
-import generators.places.ResidenceGenerator;
 import time.Time;
 import utils.Random;
 import persons.Person;
 import persons.Person.Gender;
 import places.*;
+import places.interfaces.Enterprise;
+import places.interfaces.Residence;
 
 public class WorldGenerator {
 
@@ -69,9 +67,11 @@ public class WorldGenerator {
 	private static String[] haircolors = { "blonde", "brunette", "black", "red" };
 	private static String[] characteristics = { "a big nose" };
 	private static List<Place> places = new ArrayList<>();
+	private static Street streets[];
 
 	public static void generate() {
 		generatePersons();
+		generateStreets();
 		generateResidences();
 		generateWorkplaces();
 		Place p[] = new Place[places.size()];
@@ -117,6 +117,21 @@ public class WorldGenerator {
 		Environment.setPersons(persons);
 	}
 
+	private static void generateStreets() {
+		String names[] = { "Church Street", "Kingsley Road", "Ives Street",
+				"Moore Street", "Winchester Street", "Wooler Street",
+				"Kinglake Road", "Coopers Road", "Oldfield Grove",
+				"Croft Street", "Mayflower Avenue", "Downtown Road",
+				"Silver Walk", "Fair Street" };
+		streets = new Street[names.length];
+		int i = 0;
+		for (String name : names) {
+			streets[i++] = new Street(name);
+			places.add(streets[i - 1]);
+		}
+
+	}
+
 	private static void generateResidences() {
 		Person persons[] = Environment.getAllPersons();
 		int i;
@@ -125,7 +140,11 @@ public class WorldGenerator {
 			residents[0] = persons[i];
 			residents[1] = persons[i + 1];
 			residents[2] = persons[i + 2];
-			Residence residence = ResidenceGenerator.generate(residents);
+			Street street = getNextStreet();
+			Residence residence = new Cabin(street.getName() + " "
+					+ street.getLastHousenumber() + 1);
+			street.addReachablePlace((Place) residence);
+			((Place) residence).addReachablePlace(street);
 			places.add((Place) residence);
 			residents[0].setResidence((Place) residence);
 			residents[1].setResidence((Place) residence);
@@ -137,7 +156,11 @@ public class WorldGenerator {
 			for (int j = 0; j < rest; j++) {
 				residents[j] = persons[i++];
 			}
-			Residence residence = ResidenceGenerator.generate(residents);
+			Street street = getNextStreet();
+			Residence residence = new Cabin(street.getName() + " "
+					+ street.getLastHousenumber() + 1);
+			street.addReachablePlace((Place) residence);
+			((Place) residence).addReachablePlace(street);
 			places.add((Place) residence);
 			for (int j = 0; j < rest; j++) {
 				residents[j].setResidence((Place) residence);
@@ -146,32 +169,31 @@ public class WorldGenerator {
 	}
 
 	private static void generateWorkplaces() {
-		Place supermarket = new Supermarket("supermarket");
-		Place pub = new Pub("pub");
-		Place park = new Park("park");
-		Place harbor = new Harbor("harbor");
-		Place salon = new Salon("salon");
-		Place bakery = new Bakery("bakery");
-		Place butchersshop = new ButchersShop("butchers shop");
-		Place gunSmithery = new GunSmithery("gunsmithery");
-		Place tailoring = new Tailoring("tailoring");
-		Place boatsalty = new Boat("boat Salty");
-		Place boatsandy = new Boat("boat Sandy");
-		Place boatcalaloo = new Boat("boat Calaloo");
-		Place brothel = new Brothel("brothel");
-		places.add(supermarket);
-		places.add(pub);
-		places.add(park);
-		places.add(harbor);
-		places.add(salon);
-		places.add(bakery);
-		places.add(butchersshop);
-		places.add(gunSmithery);
-		places.add(tailoring);
-		places.add(boatsalty);
-		places.add(boatsandy);
-		places.add(boatcalaloo);
-		places.add(brothel);
+		List<Place> workplaces = new ArrayList<Place>();
+		workplaces.add(new Supermarket("supermarket"));
+		workplaces.add(new Pub("pub"));
+		workplaces.add(new Park("park"));
+		workplaces.add(new Harbor("harbor"));
+		workplaces.add(new Salon("salon"));
+		workplaces.add(new Bakery("bakery"));
+		workplaces.add(new ButchersShop("butchers shop"));
+		workplaces.add(new GunSmithery("gunsmithery"));
+		workplaces.add(new Tailoring("tailoring"));
+		workplaces.add(new Boat("boat Salty"));
+		workplaces.add(new Boat("boat Sandy"));
+		workplaces.add(new Boat("boat Calaloo"));
+		workplaces.add(new Brothel("brothel"));
+		workplaces.add(new Theatre("theatre"));
+		workplaces.add(new TownHall("townhall"));
+		workplaces.add(new FireDepartment("firedepartment"));
+		workplaces.add(new PoliceDepartment("policedepartment"));
+
+		for (Place p : workplaces) {
+			places.add(p);
+			Street street = getNextStreet();
+			p.addReachablePlace(street);
+			street.addReachablePlace(p);
+		}
 	}
 
 	private static void generateCalendars() {
@@ -209,7 +231,7 @@ public class WorldGenerator {
 					assignPersonsToJob(persons, 1, place,
 							GunsmithCalendarGenerator.class, start, end);
 				} else if (place instanceof Harbor) {
-					assignPersonsToJob(persons, 11, place,
+					assignPersonsToJob(persons, 10, place,
 							DockworkerCalendarGenerator.class, start, end);
 				} else if (place instanceof PoliceDepartment) {
 					assignPersonsToJob(persons, 5, place,
@@ -230,19 +252,35 @@ public class WorldGenerator {
 					assignPersonsToJob(persons, 1, place,
 							MayorCalendarGenerator.class, start, end);
 				} else if (place instanceof Boat) {
-					assignPersonsToJob(persons, 7, place,
+					assignPersonsToJob(persons, 3, place,
 							FisherCalendarGenerator.class, start, end);
 				}
 			}
 		}
 	}
 
+	private static Street getNextStreet() {
+		Street smallest = null;
+		int nr = 999;
+		for (Street s : streets) {
+			if (s.getLastHousenumber() < nr) {
+				smallest = s;
+				nr = s.getLastHousenumber();
+				break;
+			}
+		}
+		return smallest;
+	}
+
 	private static void assignPersonsToJob(Queue<Person> persons, int number,
-			Place place, Class generator, Time start, Time end) {
+			Place place, @SuppressWarnings("rawtypes") Class generator,
+			Time start, Time end) {
+		
 		for (int i = 0; i < number; i++) {
 			Person p = persons.poll();
 			p.setWorkplace(place);
 			try {
+				@SuppressWarnings("unchecked")
 				Constructor<?> con = generator.getConstructor(Time.class,
 						Time.class, Person.class);
 				CalendarGenerator g = (CalendarGenerator) con.newInstance(

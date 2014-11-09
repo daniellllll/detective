@@ -12,10 +12,10 @@ import items.Item;
 
 public abstract class Place implements Inspectable, ItemContainer {
 
-	private String name;
-	private List<Person> persons;
-	private List<Item> items;
-	private List<Place> reachablePlaces;
+	protected String name;
+	protected List<Person> persons;
+	protected List<Item> items;
+	protected List<Place> reachablePlaces;
 
 	public Place(String name) {
 		this.name = name;

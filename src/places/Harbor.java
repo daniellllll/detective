@@ -1,5 +1,6 @@
 package places;
 
+import places.interfaces.Enterprise;
 import time.Time;
 
 public class Harbor extends Place implements Enterprise{
