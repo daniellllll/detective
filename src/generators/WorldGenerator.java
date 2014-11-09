@@ -1,5 +1,6 @@
 package generators;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import main.Environment;
@@ -62,7 +63,7 @@ public class WorldGenerator {
 	private static String[] lastnames;
 	private static String[] haircolors = { "blonde", "brunette", "black", "red" };
 	private static String[] characteristics = { "a big nose" };
-	private static List<Place> places;
+	private static List<Place> places = new ArrayList<>();
 
 	public static void generate() {
 		generatePersons();
