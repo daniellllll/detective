@@ -68,6 +68,7 @@ public class WorldGenerator {
 	public static void generate() {
 		generatePersons();
 		generateResidences();
+		generateWorkplaces();
 		generateWorkplacesAndCalendars();
 		Place p[] = new Place[places.size()];
 		int i = 0;
@@ -139,8 +140,7 @@ public class WorldGenerator {
 		}
 	}
 
-	private static void generateWorkplacesAndCalendars() {
-		Person persons[] = Environment.getAllPersons();
+	private static void generateWorkplaces(){
 		Place supermarket = new Supermarket("supermarket");
 		Place pub = new Pub("pub");
 		Place park = new Park("park");
@@ -167,6 +167,10 @@ public class WorldGenerator {
 		places.add(boatsandy);
 		places.add(boatcalaloo);
 		places.add(brothel);
+	}
+	
+	private static void generateWorkplacesAndCalendars() {
+		Person persons[] = Environment.getAllPersons();
 		Person randpersons[] = new Person[persons.length];
 		utils.Random.getUniqueElems(persons, randpersons);
 
