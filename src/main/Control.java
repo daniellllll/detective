@@ -40,6 +40,8 @@ public class Control implements UIListener {
 		notepad.insertInto(pub);
 		Watch watch = new Watch("watch");
 		watch.insertInto(pub);
+		Map map = new Map("map");
+		map.insertInto(pub);
 
 		player = new Player();
 		Environment.setPlayer(player);
