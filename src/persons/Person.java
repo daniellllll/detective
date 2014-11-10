@@ -17,7 +17,7 @@ public class Person implements Inspectable {
 	private String characteristic;
 	private Circle friends, enemies, family, acquaintances;
 	private Calendar calendar;
-	private Person father, mother, siblings[], partner;
+	private Person father, mother, partner;
 	private Gender gender;
 	private Place residence, workplace;
 
@@ -35,7 +35,6 @@ public class Person implements Inspectable {
 		friends = new Circle();
 		enemies = new Circle();
 		family = new Circle();
-		siblings = new Person[0];
 		acquaintances = new Circle();
 		calendar = new Calendar();
 		this.father = father;
@@ -54,17 +53,11 @@ public class Person implements Inspectable {
 		if (person == mother) {
 			return Relationship.MOTHER;
 		}
-		for (Person p : siblings) {
-			if (p == person) {
-				return Relationship.SIBLING;
-			}
+		if (person.father == father && person.mother == mother){
+			return Relationship.SIBLING;
 		}
 
 		return null;
-	}
-
-	public void setSiblings(Person[] siblings) {
-		this.siblings = siblings;
 	}
 
 	public String getSurname() {
@@ -105,10 +98,6 @@ public class Person implements Inspectable {
 
 	public Person getMother() {
 		return mother;
-	}
-
-	public Person[] getSiblings() {
-		return siblings;
 	}
 
 	public Person getPartner() {
