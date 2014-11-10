@@ -24,7 +24,13 @@ public class Control implements UIListener {
 		Time.setStartTime(new Time(1815, 3, 21, 12, 0));
 
 		WorldGenerator.generate();
-		Place pub = new Pub("Pub");
+
+		Place pub = null;
+		for (Place p : Environment.getAllPlaces()) {
+			if (p instanceof Pub) {
+				pub = p;
+			}
+		}
 		for (Person p : Environment.getAllPersons()) {
 			pub.addPerson(p);
 		}
@@ -43,7 +49,7 @@ public class Control implements UIListener {
 		player.goTo(pub);
 
 		UI.setUIListener(this);
-		UI.write("You are in the Pub.");
+		UI.write("You are in the pub.");
 		while (true) {
 			UI.waitForInput();
 		}
@@ -93,6 +99,11 @@ public class Control implements UIListener {
 	@Override
 	public void onAsk(Person person, Question question) {
 		person.ask(question);
+	}
+
+	@Override
+	public void onGoto(Place place) {		
+		player.goTo(place);
 	}
 
 }

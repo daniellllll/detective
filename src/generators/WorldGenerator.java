@@ -130,6 +130,14 @@ public class WorldGenerator {
 			places.add(streets[i - 1]);
 		}
 
+		// connect streets
+		for (i = 0; i < 5; i++) {
+			for (int j = streets.length - 5; j < streets.length; j++) {
+				streets[i].addReachablePlace(streets[j]);
+				streets[j].addReachablePlace(streets[i]);
+			}
+		}
+
 	}
 
 	private static void generateResidences() {
@@ -142,7 +150,7 @@ public class WorldGenerator {
 			residents[2] = persons[i + 2];
 			Street street = getNextStreet();
 			Residence residence = new Cabin(street.getName() + " "
-					+ street.getLastHousenumber() + 1);
+					+ (street.getLastHousenumber() + 1));
 			street.addReachablePlace((Place) residence);
 			((Place) residence).addReachablePlace(street);
 			places.add((Place) residence);
@@ -158,7 +166,7 @@ public class WorldGenerator {
 			}
 			Street street = getNextStreet();
 			Residence residence = new Cabin(street.getName() + " "
-					+ street.getLastHousenumber() + 1);
+					+ (street.getLastHousenumber() + 1));
 			street.addReachablePlace((Place) residence);
 			((Place) residence).addReachablePlace(street);
 			places.add((Place) residence);
@@ -266,7 +274,6 @@ public class WorldGenerator {
 			if (s.getLastHousenumber() < nr) {
 				smallest = s;
 				nr = s.getLastHousenumber();
-				break;
 			}
 		}
 		return smallest;
@@ -275,7 +282,7 @@ public class WorldGenerator {
 	private static void assignPersonsToJob(Queue<Person> persons, int number,
 			Place place, @SuppressWarnings("rawtypes") Class generator,
 			Time start, Time end) {
-		
+
 		for (int i = 0; i < number; i++) {
 			Person p = persons.poll();
 			p.setWorkplace(place);

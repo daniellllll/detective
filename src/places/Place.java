@@ -66,8 +66,8 @@ public abstract class Place implements Inspectable, ItemContainer {
 		}
 		return places;
 	}
-	
-	public void addReachablePlace(Place place){
+
+	public void addReachablePlace(Place place) {
 		reachablePlaces.add(place);
 	}
 
@@ -85,6 +85,10 @@ public abstract class Place implements Inspectable, ItemContainer {
 		UI.write("The following Items are in this room:");
 		for (Item i : items) {
 			UI.write(i.getName());
+		}
+		UI.write("The following places are reachable:");
+		for (Place p : reachablePlaces) {
+			UI.write(p.getName());
 		}
 	}
 

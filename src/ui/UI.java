@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import main.Environment;
 import persons.Person;
 import persons.questions.*;
+import places.Place;
 import time.Time;
 
 public class UI {
@@ -35,6 +36,14 @@ public class UI {
 			break;
 		case "take":
 			listener.onTake(input);
+			break;
+		case "goto":
+			Place p = Environment.getPlace(input);
+			if (p == null) {
+				UI.write("This place isn't reachable!");
+				return;
+			}
+			listener.onGoto(p);
 			break;
 		case "ask":
 			Person person = Environment.getPerson(input);
