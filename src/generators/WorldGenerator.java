@@ -207,7 +207,7 @@ public class WorldGenerator {
 	private static void generateCalendars() {
 		Time start = new Time(Time.getStartTime().toSeconds() - 60 * 60 * 24
 				* 7);
-		Time end = Time.getStartTime();
+		Time end = new Time(Time.now().toSeconds() + 60 * 60 * 24 * 30);
 		Person randpersons[] = new Person[Environment.getAllPersons().length];
 		utils.Random.getUniqueElems(Environment.getAllPersons(), randpersons);
 		Queue<Person> persons = new LinkedList<>();

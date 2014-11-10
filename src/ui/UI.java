@@ -65,20 +65,20 @@ public class UI {
 			}
 
 			// Place question
-			if (question.startsWith("where were you at")) {
+			else if (question.startsWith("where were you at")) {
 				Time time = new Time(question.substring(18));
 				Question q = new PlaceQuestion(person, time);
 				listener.onAsk(person, q);
 			}
 
 			// Residence question
-			if (question.equals("where do you live")) {
+			else if (question.equals("where do you live")) {
 				Question q = new ResidenceQuestion(person);
 				listener.onAsk(person, q);
 			}
 
 			// Workplace question
-			if (question.equals("where do you work")) {
+			else if (question.equals("where do you work")) {
 				Question q = new WorkplaceQuestion(person);
 				listener.onAsk(person, q);
 			}

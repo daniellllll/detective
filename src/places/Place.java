@@ -3,7 +3,9 @@ package places;
 import java.util.ArrayList;
 import java.util.List;
 
+import main.Environment;
 import persons.Person;
+import time.Time;
 import ui.UI;
 import interfaces.Inspectable;
 import interfaces.ItemContainer;
@@ -13,23 +15,18 @@ import items.Item;
 public abstract class Place implements Inspectable, ItemContainer {
 
 	protected String name;
-	protected List<Person> persons;
 	protected List<Item> items;
 	protected List<Place> reachablePlaces;
 
 	public Place(String name) {
 		this.name = name;
-		persons = new ArrayList<>();
 		items = new ArrayList<>();
 		reachablePlaces = new ArrayList<>();
 	}
 
-	public void addPerson(Person person) {
-		persons.add(person);
-	}
-
 	public Inspectable[] getInspectables() {
-		Inspectable insps[] = new Inspectable[persons.size() + items.size()];
+		Person persons[] = getPersons();
+		Inspectable insps[] = new Inspectable[persons.length + items.size()];
 		int i = 0;
 		for (Person p : persons) {
 			insps[i++] = (Inspectable) p;
@@ -50,12 +47,18 @@ public abstract class Place implements Inspectable, ItemContainer {
 	}
 
 	public Person[] getPersons() {
-		Person pers[] = new Person[persons.size()];
-		int i = 0;
-		for (Person p : persons) {
-			pers[i++] = p;
+		List<Person> persons = new ArrayList<Person>();
+		for (Person p : Environment.getAllPersons()) {
+			if (p.getCalendar().get(Time.now()).getPlace() == this) {
+				persons.add(p);
+			}
 		}
-		return pers;
+		Person p[] = new Person[persons.size()];
+		int i = 0;
+		for (Person person : persons) {
+			p[i++] = person;
+		}
+		return p;
 	}
 
 	public Place[] getReachablePlaces() {
@@ -79,7 +82,7 @@ public abstract class Place implements Inspectable, ItemContainer {
 	@Override
 	public void inspect() {
 		UI.write("The following people are in this room:");
-		for (Person p : persons) {
+		for (Person p : getPersons()) {
 			UI.write(p.getName());
 		}
 		UI.write("The following Items are in this room:");

@@ -21,7 +21,7 @@ public class Control implements UIListener {
 
 	public Control() {
 		// set time
-		Time.setStartTime(new Time(1815, 3, 21, 12, 0));
+		Time.setStartTime(new Time(1815, 3, 21, 15, 0));
 
 		WorldGenerator.generate();
 
@@ -30,9 +30,6 @@ public class Control implements UIListener {
 			if (p instanceof Pub) {
 				pub = p;
 			}
-		}
-		for (Person p : Environment.getAllPersons()) {
-			pub.addPerson(p);
 		}
 
 		Knife knife = new Knife("knife");
@@ -102,7 +99,7 @@ public class Control implements UIListener {
 	}
 
 	@Override
-	public void onGoto(Place place) {		
+	public void onGoto(Place place) {
 		player.goTo(place);
 	}
 
