@@ -2,6 +2,7 @@ package persons.questions;
 
 import persons.Person;
 import persons.Person.Gender;
+import persons.Person.Relationship;
 import ui.UI;
 
 public class RelationshipQuestion implements Question {
@@ -14,7 +15,14 @@ public class RelationshipQuestion implements Question {
 
 	@Override
 	public void answer() {
-		switch (a.getRelationship(b)) {
+		Relationship rel = a.getRelationship(b);
+		
+		if(rel == null){
+			UI.write("I don't know this person");
+			return;
+		}
+		
+		switch (rel) {
 		case FATHER:
 			UI.write("Yes, he's my father.");
 			break;
@@ -29,7 +37,7 @@ public class RelationshipQuestion implements Question {
 			}
 			break;
 		default:
-			UI.write("I don't know this person.");
+			UI.write("TODO");
 			break;
 		}
 	}
