@@ -79,4 +79,8 @@ public class Environment {
 		}
 		return null;
 	}
+
+	public static Place getActPlace() {
+		return player.getPlace();
+	}
 }

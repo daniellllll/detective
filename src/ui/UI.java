@@ -1,5 +1,7 @@
 package ui;
 
+import interfaces.Inspectable;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -21,12 +23,29 @@ public class UI {
 	public static void waitForInput() {
 		System.out.print("> ");
 		String input = read();
+		String cmd = null;
 		int cmdend = input.indexOf(" ");
-		String cmd = input.substring(0, cmdend);
-		input = input.substring(cmdend + 1);
+		if (cmdend == -1) {
+			cmd = input;
+			input = null;
+		} else {
+			cmd = input.substring(0, cmdend);
+			input = input.substring(cmdend + 1);
+		}
+
 		switch (cmd) {
 		case "inspect":
-			listener.onInspect(input);
+			if (input == null) {
+				listener.onInspect(Environment.getActPlace());
+				break;
+			}
+			for (Inspectable insp : Environment.getInspectables()) {
+				if (insp.getName().equals(input)) {
+					listener.onInspect(insp);
+					break;
+				}
+			}
+			UI.write("There is no \"" + input + "\"");
 			break;
 		case "use":
 			int forbegin = input.indexOf("for");

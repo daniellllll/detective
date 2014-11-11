@@ -55,14 +55,8 @@ public class Control implements UIListener {
 	}
 
 	@Override
-	public void onInspect(String name) {
-		for (Inspectable insp : Environment.getInspectables()) {
-			if (insp.getName().equals(name)) {
-				insp.inspect();
-				return;
-			}
-		}
-		UI.write("There is no \"" + name + "\"");
+	public void onInspect(Inspectable inspectable) {
+		inspectable.inspect();
 	}
 
 	@Override

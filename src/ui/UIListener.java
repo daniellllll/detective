@@ -1,12 +1,13 @@
 package ui;
 
+import interfaces.Inspectable;
 import persons.Person;
 import persons.questions.Question;
 import places.Place;
 
 public interface UIListener {
 
-	public void onInspect(String name);
+	public void onInspect(Inspectable inspectable);
 
 	public void onUse(String item1, String item2);
 
