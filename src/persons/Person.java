@@ -56,6 +56,9 @@ public class Person implements Inspectable {
 		if (person.father == father && person.mother == mother) {
 			return Relationship.SIBLING;
 		}
+		if(person.partner == this){
+			return Relationship.PARTNER;
+		}
 
 		return null;
 	}

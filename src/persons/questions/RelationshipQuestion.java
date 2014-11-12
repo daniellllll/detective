@@ -36,6 +36,13 @@ public class RelationshipQuestion implements Question {
 				UI.write("Yes, she's my sister.");
 			}
 			break;
+		case PARTNER:
+			if (b.getGender() == Gender.male) {
+				UI.write("Yes, he's my husband.");
+			} else {
+				UI.write("Yes, she's my wife.");
+			}
+			break;
 		default:
 			UI.write("TODO");
 			break;

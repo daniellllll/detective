@@ -133,7 +133,7 @@ public class WorldGenerator {
 			unmarried.offer(p);
 		}
 		while (!unmarried.isEmpty()) {
-			// find right partner for marriage. 
+			// find right partner for marriage.
 			// Put wrong partners back into queue
 			Person p1 = unmarried.poll();
 			Person p2 = unmarried.poll();
@@ -156,6 +156,23 @@ public class WorldGenerator {
 			gen3[g3count++] = p1.makeChild(
 					getSurname(persons, p1.getLastname(), gender), gender);
 			persons.add(gen3[g3count - 1]);
+		}
+
+		// marry people of 3. generation
+		for (Person p : gen3) {
+			unmarried.offer(p);
+		}
+		while (unmarried.size() >= 2) {
+			// find right partner for marriage.
+			// Put wrong partners back into queue
+			Person p1 = unmarried.poll();
+			Person p2 = unmarried.poll();
+			while (p2.getGender() == p1.getGender()
+					|| p1.getRelationship(p2) == Relationship.SIBLING) {
+				unmarried.offer(p2);
+				p2 = unmarried.poll();
+			}
+			p1.marry(p2);
 		}
 
 		// add all persons to Environment
@@ -282,16 +299,16 @@ public class WorldGenerator {
 					assignPersonsToJob(persons, 4, place,
 							ProstituteCalendarGenerator.class, start, end);
 				} else if (place instanceof FireDepartment) {
-					assignPersonsToJob(persons, 5, place,
+					assignPersonsToJob(persons, 10, place,
 							FirefighterCalendarGenerator.class, start, end);
 				} else if (place instanceof GunSmithery) {
 					assignPersonsToJob(persons, 1, place,
 							GunsmithCalendarGenerator.class, start, end);
 				} else if (place instanceof Harbor) {
-					assignPersonsToJob(persons, 10, place,
+					assignPersonsToJob(persons, 20, place,
 							DockworkerCalendarGenerator.class, start, end);
 				} else if (place instanceof PoliceDepartment) {
-					assignPersonsToJob(persons, 5, place,
+					assignPersonsToJob(persons, 6, place,
 							PoliceofficerCalendarGenerator.class, start, end);
 				} else if (place instanceof Pub) {
 					assignPersonsToJob(persons, 2, place,
@@ -303,13 +320,13 @@ public class WorldGenerator {
 					assignPersonsToJob(persons, 1, place,
 							TailorCalendarGenerator.class, start, end);
 				} else if (place instanceof Theatre) {
-					assignPersonsToJob(persons, 2, place,
+					assignPersonsToJob(persons, 8, place,
 							ActorCalendarGenerator.class, start, end);
 				} else if (place instanceof TownHall) {
 					assignPersonsToJob(persons, 1, place,
 							MayorCalendarGenerator.class, start, end);
 				} else if (place instanceof Boat) {
-					assignPersonsToJob(persons, 3, place,
+					assignPersonsToJob(persons, 5, place,
 							FisherCalendarGenerator.class, start, end);
 				}
 			}
@@ -317,14 +334,13 @@ public class WorldGenerator {
 
 		// TODO unemployed persons
 		int count = 0;
+		Place place = new Pub("Place for unemployed people");
 		while (persons.size() != 0) {
 			count++;
-			Place place = new Pub("Place for unemployed people");
 			assignPersonsToJob(persons, 1, place,
 					TailorCalendarGenerator.class, start, end);
 		}
 		System.out.println("TODO: " + count + " unemployed persons");
-		System.out.println(persons.size());
 	}
 
 	private static Street getNextStreet() {
