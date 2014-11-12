@@ -5,12 +5,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
 import main.Environment;
 import generators.calendar.*;
 import time.Time;
 import utils.Random;
 import persons.Person;
 import persons.Person.Gender;
+import persons.Person.Relationship;
 import places.*;
 import places.interfaces.Enterprise;
 import places.interfaces.Residence;
@@ -44,7 +46,7 @@ public class WorldGenerator {
 			"Elizabeth", "Megan", "Carry" };
 	private static String[] lastnames_english = { "Smith", "Miller", "Roberts",
 			"Cooper", "Colt", "Middleton", "Tannenbaum", "Kirschenbaum",
-			"Tanner", "Jackson", "Bolton", "King", "Nichols" };
+			"Tanner", "Jackson", "Bolton", "King", "Nichols", "Brown" };
 	private static String[] surnames_m_japanese = { "Akio", "Daiki", "Daisuke",
 			"Haruto", "Hayato", "Hiroki", "Hiroshi", "Itsuki", "Kaito",
 			"Masahiro", "Masaru", "Shinichi", "Shin", "Takeshi", "Tetsuya",
@@ -84,37 +86,84 @@ public class WorldGenerator {
 	}
 
 	private static void generatePersons() {
+		// choose random country
 		String country[][] = Random.getRandElem(countries);
 		surnames_m = country[0];
 		surnames_f = country[1];
 		lastnames = country[2];
 
-		Person[] persons = new Person[50];
+		// One array per generation, one list for all persons
+		Person gen1[] = new Person[28];
+		Person gen2[] = new Person[42];
+		Person gen3[] = new Person[63];
+		List<Person> persons = new ArrayList<>();
 
-		int firstGenNum = 20;
-		int personCount = 0;
-
-		String familynames[] = new String[firstGenNum / 2];
+		// generate 1. and 2. generation
+		String familynames[] = new String[gen1.length / 2];
 		Random.getUniqueElems(lastnames, familynames);
-		for (String lastname : familynames) {
-			// generate parents (1. Gen.)
-			Person man = getRandPerson(persons, Gender.male, lastname);
-			Person woman = getRandPerson(persons, Gender.female, lastname);
-			man.setPartner(woman);
-			woman.setPartner(man);
-			persons[personCount++] = man;
-			persons[personCount++] = woman;
-			// generate childs (2. Gen.)
-			persons[personCount++] = getRandPerson(persons, Gender.male, man,
-					woman);
-			persons[personCount++] = getRandPerson(persons, Gender.male, man,
-					woman);
-			persons[personCount++] = getRandPerson(
-					persons,
-					Random.getRandElem(new Gender[] { Gender.male,
-							Gender.female }), man, woman);
+		int g1count = 0, g2count = 0, g3count = 0;
+		for (String familyname : familynames) {
+			// 1. generation (man + woman)
+			Person man = getRandPerson(persons, Gender.male, familyname);
+			Person woman = getRandPerson(persons, Gender.female, familyname);
+			man.marry(woman);
+			gen1[g1count++] = man;
+			gen1[g1count++] = woman;
+			persons.add(man);
+			persons.add(woman);
+			// 2. generation (female + male + random Child of man + woman)
+			gen2[g2count++] = man.makeChild(
+					getSurname(persons, man.getLastname(), Gender.male),
+					Gender.male);
+			persons.add(gen2[g2count - 1]);
+			gen2[g2count++] = man.makeChild(
+					getSurname(persons, man.getLastname(), Gender.female),
+					Gender.female);
+			persons.add(gen2[g2count - 1]);
+			Gender gender = getGender();
+			gen2[g2count++] = man.makeChild(
+					getSurname(persons, man.getLastname(), gender), gender);
+			persons.add(gen2[g2count - 1]);
+
 		}
-		Environment.setPersons(persons);
+
+		// marry people of 2. generation, generate 3. generation
+		Queue<Person> unmarried = new LinkedList<>();
+		for (Person p : gen2) {
+			unmarried.offer(p);
+		}
+		while (!unmarried.isEmpty()) {
+			// find right partner for marriage. 
+			// Put wrong partners back into queue
+			Person p1 = unmarried.poll();
+			Person p2 = unmarried.poll();
+			while (p2.getGender() == p1.getGender()
+					|| p1.getRelationship(p2) == Relationship.SIBLING) {
+				unmarried.offer(p2);
+				p2 = unmarried.poll();
+			}
+			p1.marry(p2);
+			// 3. generation (female + male + random Child of p1 + p2)
+			gen3[g3count++] = p1.makeChild(
+					getSurname(persons, p1.getLastname(), Gender.male),
+					Gender.male);
+			persons.add(gen3[g3count - 1]);
+			gen3[g3count++] = p1.makeChild(
+					getSurname(persons, p1.getLastname(), Gender.female),
+					Gender.female);
+			persons.add(gen3[g3count - 1]);
+			Gender gender = getGender();
+			gen3[g3count++] = p1.makeChild(
+					getSurname(persons, p1.getLastname(), gender), gender);
+			persons.add(gen3[g3count - 1]);
+		}
+
+		// add all persons to Environment
+		Person[] allpersons = new Person[persons.size()];
+		for (int i = 0; i < allpersons.length; i++) {
+			allpersons[i] = persons.get(i);
+		}
+		Environment.setPersons(allpersons);
 	}
 
 	private static void generateStreets() {
@@ -265,6 +314,17 @@ public class WorldGenerator {
 				}
 			}
 		}
+
+		// TODO unemployed persons
+		int count = 0;
+		while (persons.size() != 0) {
+			count++;
+			Place place = new Pub("Place for unemployed people");
+			assignPersonsToJob(persons, 1, place,
+					TailorCalendarGenerator.class, start, end);
+		}
+		System.out.println("TODO: " + count + " unemployed persons");
+		System.out.println(persons.size());
 	}
 
 	private static Street getNextStreet() {
@@ -300,7 +360,7 @@ public class WorldGenerator {
 		}
 	}
 
-	private static boolean nameExists(Person[] persons, String surname,
+	private static boolean nameExists(List<Person> persons, String surname,
 			String lastname) {
 		for (Person person : persons) {
 			if (person != null) {
@@ -313,7 +373,7 @@ public class WorldGenerator {
 		return false;
 	}
 
-	private static String getSurname(Person[] persons, String lastname,
+	private static String getSurname(List<Person> persons, String lastname,
 			Gender gender) {
 		String[] surnames = surnames_m;
 		if (gender == Gender.female) {
@@ -326,22 +386,23 @@ public class WorldGenerator {
 		return surname;
 	}
 
-	private static Person getRandPerson(Person persons[], Gender gender,
-			Person father, Person mother) {
-		String lastname = mother.getLastname();
-		String surname = getSurname(persons, lastname, gender);
-		String haircolor = Random.getRandElem(haircolors);
-		String characteristic = Random.getRandElem(characteristics);
-		return new Person(gender, surname, lastname, haircolor, characteristic,
-				father, mother);
-	}
-
-	private static Person getRandPerson(Person persons[], Gender gender,
+	private static Person getRandPerson(List<Person> persons, Gender gender,
 			String lastname) {
 		String surname = getSurname(persons, lastname, gender);
 		String haircolor = Random.getRandElem(haircolors);
 		String characteristic = Random.getRandElem(characteristics);
 		return new Person(gender, surname, lastname, haircolor, characteristic,
 				null, null);
+	}
+
+	private static Gender actGender = Gender.male;
+
+	private static Gender getGender() {
+		if (actGender == Gender.male) {
+			actGender = Gender.female;
+			return Gender.female;
+		}
+		actGender = Gender.male;
+		return Gender.male;
 	}
 }

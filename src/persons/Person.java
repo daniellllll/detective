@@ -53,11 +53,33 @@ public class Person implements Inspectable {
 		if (person == mother) {
 			return Relationship.MOTHER;
 		}
-		if (person.father == father && person.mother == mother){
+		if (person.father == father && person.mother == mother) {
 			return Relationship.SIBLING;
 		}
 
 		return null;
+	}
+
+	public void marry(Person partner) {
+		this.partner = partner;
+		partner.partner = partner;
+		if (gender == Gender.female) {
+			lastname = partner.lastname;
+		} else {
+			partner.lastname = lastname;
+		}
+	}
+
+	public Person makeChild(String surname, Gender gender) {
+		Person child;
+		if (gender == Gender.male) {
+			child = new Person(gender, surname, lastname, haircolor,
+					characteristic, this, partner);
+		} else {
+			child = new Person(gender, surname, lastname, haircolor,
+					characteristic, partner, this);
+		}
+		return child;
 	}
 
 	public String getSurname() {
@@ -102,10 +124,6 @@ public class Person implements Inspectable {
 
 	public Person getPartner() {
 		return partner;
-	}
-
-	public void setPartner(Person partner) {
-		this.partner = partner;
 	}
 
 	public Gender getGender() {
