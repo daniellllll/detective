@@ -42,7 +42,7 @@ public class UI {
 			for (Inspectable insp : Environment.getInspectables()) {
 				if (insp.getName().equals(input)) {
 					listener.onInspect(insp);
-					break;
+					return;
 				}
 			}
 			UI.write("There is no \"" + input + "\"");
