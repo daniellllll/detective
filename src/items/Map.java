@@ -2,7 +2,7 @@ package items;
 
 import places.Place;
 import places.Street;
-import places.interfaces.Enterprise;
+import places.Enterprise;
 import ui.UI;
 import main.Environment;
 

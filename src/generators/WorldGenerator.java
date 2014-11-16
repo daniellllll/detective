@@ -14,7 +14,7 @@ import persons.Person;
 import persons.Person.Gender;
 import persons.Person.Relationship;
 import places.*;
-import places.interfaces.Enterprise;
+import places.Enterprise;
 import places.interfaces.Residence;
 
 public class WorldGenerator {
@@ -361,7 +361,7 @@ public class WorldGenerator {
 
 		for (int i = 0; i < number; i++) {
 			Person p = persons.poll();
-			p.setWorkplace(place);
+			((Enterprise) place).addPerson(p);
 			try {
 				@SuppressWarnings("unchecked")
 				Constructor<?> con = generator.getConstructor(Time.class,

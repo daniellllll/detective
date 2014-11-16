@@ -1,24 +1,11 @@
 package places;
 
-import places.interfaces.Enterprise;
-import time.Time;
+import time.Timespan;
 
-public class GunSmithery extends Place implements Enterprise {
+public class GunSmithery extends Enterprise {
 
 	public GunSmithery(String name) {
-		super(name);
-	}
-
-	@Override
-	public Time getOpeningTime() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Time getClosingTime() {
-		// TODO Auto-generated method stub
-		return null;
+		super(name, new Timespan(9,0,17,0));
 	}
 
 }

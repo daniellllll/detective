@@ -83,4 +83,10 @@ public class Environment {
 	public static Place getActPlace() {
 		return player.getPlace();
 	}
+	
+	public static void debug(){
+		for(Person p : getAllPersons()){
+			System.out.println(p.getName() + ": "+ p.getWorktime());
+		}
+	}
 }

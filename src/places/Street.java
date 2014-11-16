@@ -1,6 +1,5 @@
 package places;
 
-import places.interfaces.Enterprise;
 import places.interfaces.Residence;
 
 public class Street extends Place {
