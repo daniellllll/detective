@@ -41,11 +41,15 @@ public class Calendar {
 				return entry.event;
 			}
 		}
-		for (Entry entry : dailyEvents) {
-			if (entry.from.getHour() <= time.getHour()
-					&& entry.from.getMinute() <= time.getMinute()
-					&& entry.to.getHour() >= time.getHour()
-					&& entry.to.getMinute() >= time.getMinute()) {
+		for (Entry entry : dailyEvents) {			
+			if (entry.to.toSeconds() < entry.from.toSeconds()) {
+				if (time.toSeconds() < entry.to.toSeconds()
+						|| time.toSeconds() > entry.from.toSeconds()) {
+					return entry.event;
+				}
+			}
+			if (entry.from.toSeconds() <= time.toSeconds()
+					&& entry.to.toSeconds() >= time.toSeconds()) {
 				return entry.event;
 			}
 		}
