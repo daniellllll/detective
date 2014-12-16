@@ -22,14 +22,14 @@ public class HairdresserCalendarGenerator extends CalendarGenerator {
 		Event lunch = new Event(Activity.LUNCH, person.getWorkplace());
 		Event dinner = new Event(Activity.DINNER, person.getResidence());
 
-		dailyRoutine.add(sleeping, new Time(0, 0), new Time(6, 0));
-		dailyRoutine.add(breakfast, new Time(6, 1), new Time(7, 0));
-		dailyRoutine.add(working, new Time(7, 1), new Time(13, 0));
-		dailyRoutine.add(lunch, new Time(13, 1), new Time(14, 0));
-		dailyRoutine.add(working, new Time(14, 1), new Time(18, 0));
-		dailyRoutine.add(dinner, new Time(18, 1), new Time(19, 0));
-		dailyRoutine.add(bookreading, new Time(19, 1), new Time(21, 0));
-		dailyRoutine.add(sleeping, new Time(21, 1), new Time(23, 59));		
+		dailyRoutine.addEvent(sleeping, new Time(0, 0), new Time(6, 0));
+		dailyRoutine.addEvent(breakfast, new Time(6, 1), new Time(7, 0));
+		dailyRoutine.addEvent(working, new Time(7, 1), new Time(13, 0));
+		dailyRoutine.addEvent(lunch, new Time(13, 1), new Time(14, 0));
+		dailyRoutine.addEvent(working, new Time(14, 1), new Time(18, 0));
+		dailyRoutine.addEvent(dinner, new Time(18, 1), new Time(19, 0));
+		dailyRoutine.addEvent(bookreading, new Time(19, 1), new Time(21, 0));
+		dailyRoutine.addEvent(sleeping, new Time(21, 1), new Time(23, 59));		
 	}
 
 	@Override

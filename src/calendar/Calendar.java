@@ -18,20 +18,34 @@ public class Calendar {
 		}
 	}
 
-	private List<Entry> calendar;
+	private List<Entry> events;
+	private List<Entry> dailyEvents;
 
 	public Calendar() {
-		calendar = new ArrayList<>();
+		events = new ArrayList<>();
+		dailyEvents = new ArrayList<>();
 	}
 
-	public void add(Event event, Time from, Time to) {
-		calendar.add(new Entry(event, from, to));
+	public void addEvent(Event event, Time from, Time to) {
+		events.add(new Entry(event, from, to));
+	}
+
+	public void addDailyEvent(Event event, Time from, Time to) {
+		dailyEvents.add(new Entry(event, from, to));
 	}
 
 	public Event get(Time time) {
-		for (Entry entry : calendar) {
+		for (Entry entry : events) {
 			if (entry.from.toSeconds() <= time.toSeconds()
 					&& entry.to.toSeconds() >= time.toSeconds()) {
+				return entry.event;
+			}
+		}
+		for (Entry entry : dailyEvents) {
+			if (entry.from.getHour() <= time.getHour()
+					&& entry.from.getMinute() <= time.getMinute()
+					&& entry.to.getHour() >= time.getHour()
+					&& entry.to.getMinute() >= time.getMinute()) {
 				return entry.event;
 			}
 		}
@@ -41,7 +55,7 @@ public class Calendar {
 	@Override
 	public String toString() {
 		String str = "";
-		for (Entry e : calendar) {
+		for (Entry e : events) {
 			str += "[" + e.from + " - " + e.to + "] " + e.event + "\n";
 		}
 		return str;
