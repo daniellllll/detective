@@ -1,5 +1,7 @@
 package places;
 
+import calendar.Event;
+import calendar.Event.Activity;
 import persons.Person;
 import time.Time;
 import time.Timespan;
@@ -31,7 +33,8 @@ public abstract class Enterprise extends Place {
 			}
 			end = endTime;
 		}
-		person.setWorktime(new Timespan(start, end));
+		person.getCalendar().addDailyEvent(new Event(Activity.WORKING, this),
+				start, end);
 		lastWorkerTime = end;
 		if (lastWorkerTime.toSeconds() >= endTime.toSeconds()) {
 			lastWorkerTime = startTime;

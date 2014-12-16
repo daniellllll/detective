@@ -2,7 +2,6 @@ package persons;
 
 import persons.questions.Question;
 import places.Place;
-import time.Timespan;
 import ui.UI;
 import interfaces.Inspectable;
 import calendar.Calendar;
@@ -21,7 +20,6 @@ public class Person implements Inspectable {
 	private Person father, mother, partner;
 	private Gender gender;
 	private Place residence, workplace;
-	private Timespan worktime;
 
 	public enum Gender {
 		male, female
@@ -157,14 +155,6 @@ public class Person implements Inspectable {
 
 	public void setWorkplace(Place workplace) {
 		this.workplace = workplace;
-	}
-
-	public Timespan getWorktime() {
-		return worktime;
-	}
-
-	public void setWorktime(Timespan worktime) {
-		this.worktime = worktime;
 	}
 
 	@Override

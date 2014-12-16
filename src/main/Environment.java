@@ -85,8 +85,6 @@ public class Environment {
 	}
 	
 	public static void debug(){
-		for(Person p : getAllPersons()){
-			System.out.println(p.getName() + ": "+ p.getWorktime());
-		}
+
 	}
 }
