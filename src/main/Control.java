@@ -21,7 +21,7 @@ public class Control implements UIListener {
 
 	public Control() {
 		// set time
-		Time.setStartTime(new Time(1815, 3, 21, 15, 0));
+		Time.setStartTime(new Time(1815, 3, 21, 17, 50));
 
 		WorldGenerator.generate();
 

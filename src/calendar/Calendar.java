@@ -30,6 +30,17 @@ public class Calendar {
 		events.add(new Entry(event, from, to));
 	}
 
+	/**
+	 * Adds a daily event. Daily events happen every day. Events which are added
+	 * earlier have a higher priority when polling them.
+	 * 
+	 * @param event
+	 *            Event
+	 * @param from
+	 *            starting time
+	 * @param to
+	 *            ending time
+	 */
 	public void addDailyEvent(Event event, Time from, Time to) {
 		dailyEvents.add(new Entry(event, from, to));
 	}
@@ -41,7 +52,9 @@ public class Calendar {
 				return entry.event;
 			}
 		}
-		for (Entry entry : dailyEvents) {			
+
+		time = new Time(time.getHour(), time.getMinute());
+		for (Entry entry : dailyEvents) {
 			if (entry.to.toSeconds() < entry.from.toSeconds()) {
 				if (time.toSeconds() < entry.to.toSeconds()
 						|| time.toSeconds() > entry.from.toSeconds()) {

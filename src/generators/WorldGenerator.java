@@ -1,13 +1,10 @@
 package generators;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-
 import main.Environment;
-import generators.calendar.*;
 import time.Time;
 import utils.Random;
 import persons.Person;
@@ -284,52 +281,41 @@ public class WorldGenerator {
 		for (Place place : Environment.getAllPlaces()) {
 			if (place instanceof Enterprise) {
 				if (place instanceof Supermarket) {
-					assignPersonsToJob(persons, 3, place,
-							ShopassistantCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 3, place);
 				} else if (place instanceof Park) {
-					assignPersonsToJob(persons, 1, place,
-							GardenerCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 1, place);
 				} else if (place instanceof Bakery) {
-					assignPersonsToJob(persons, 2, place,
-							BakerCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 2, place);
 				} else if (place instanceof ButchersShop) {
-					assignPersonsToJob(persons, 2, place,
-							ButcherCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 2, place);
 				} else if (place instanceof Brothel) {
-					assignPersonsToJob(persons, 4, place,
-							ProstituteCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 4, place);
 				} else if (place instanceof FireDepartment) {
-					assignPersonsToJob(persons, 10, place,
-							FirefighterCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 10, place);
 				} else if (place instanceof GunSmithery) {
-					assignPersonsToJob(persons, 1, place,
-							GunsmithCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 1, place);
 				} else if (place instanceof Harbor) {
-					assignPersonsToJob(persons, 20, place,
-							DockworkerCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 20, place);
 				} else if (place instanceof PoliceDepartment) {
-					assignPersonsToJob(persons, 6, place,
-							PoliceofficerCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 6, place);
 				} else if (place instanceof Pub) {
-					assignPersonsToJob(persons, 2, place,
-							BarkeeperCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 2, place);
 				} else if (place instanceof Salon) {
-					assignPersonsToJob(persons, 2, place,
-							HairdresserCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 2, place);
 				} else if (place instanceof Tailoring) {
-					assignPersonsToJob(persons, 1, place,
-							TailorCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 1, place);
 				} else if (place instanceof Theatre) {
-					assignPersonsToJob(persons, 8, place,
-							ActorCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 8, place);
 				} else if (place instanceof TownHall) {
-					assignPersonsToJob(persons, 1, place,
-							MayorCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 1, place);
 				} else if (place instanceof Boat) {
-					assignPersonsToJob(persons, 5, place,
-							FisherCalendarGenerator.class, start, end);
+					assignPersonsToJob(persons, 5, place);
 				}
 			}
+		}
+
+		for (Person p : Environment.getAllPersons()) {
+			CalendarGenerator.generate(p);
 		}
 
 		// TODO unemployed persons
@@ -337,8 +323,7 @@ public class WorldGenerator {
 		Place place = new Pub("Place for unemployed people");
 		while (persons.size() != 0) {
 			count++;
-			assignPersonsToJob(persons, 1, place,
-					TailorCalendarGenerator.class, start, end);
+			assignPersonsToJob(persons, 1, place);
 		}
 		System.out.println("TODO: " + count + " unemployed persons");
 	}
@@ -356,23 +341,11 @@ public class WorldGenerator {
 	}
 
 	private static void assignPersonsToJob(Queue<Person> persons, int number,
-			Place place, @SuppressWarnings("rawtypes") Class generator,
-			Time start, Time end) {
+			Place place) {
 
 		for (int i = 0; i < number; i++) {
 			Person p = persons.poll();
 			((Enterprise) place).addPerson(p);
-			try {
-				@SuppressWarnings("unchecked")
-				Constructor<?> con = generator.getConstructor(Time.class,
-						Time.class, Person.class);
-				CalendarGenerator g = (CalendarGenerator) con.newInstance(
-						start, end, p);
-				g.generate();
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.exit(1);
-			}
 		}
 	}
 
