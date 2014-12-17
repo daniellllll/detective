@@ -1,5 +1,6 @@
 package main;
 
+import generators.PersonsGenerator;
 import generators.WorldGenerator;
 import interfaces.Inspectable;
 import interfaces.Useable;
@@ -23,6 +24,7 @@ public class Control implements UIListener {
 		// set time
 		Time.setStartTime(new Time(1815, 3, 21, 17, 50));
 
+		PersonsGenerator.generate();
 		WorldGenerator.generate();
 
 		Place pub = null;
