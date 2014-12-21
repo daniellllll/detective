@@ -53,7 +53,8 @@ public class Person implements Inspectable {
 		if (person == mother) {
 			return Relationship.MOTHER;
 		}
-		if (person.father == father && person.mother == mother) {
+		if (person.father == father && person.mother == mother
+				&& father != null && mother != null) {
 			return Relationship.SIBLING;
 		}
 		if (person.partner == this) {
@@ -65,7 +66,7 @@ public class Person implements Inspectable {
 
 	public void marry(Person partner) {
 		this.partner = partner;
-		partner.partner = partner;
+		partner.partner = this;
 		if (gender == Gender.female) {
 			lastname = partner.lastname;
 		} else {

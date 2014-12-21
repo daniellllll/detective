@@ -25,9 +25,17 @@ public class Timespan {
 	public Time getEndTime() {
 		return end;
 	}
-	
+
+	public boolean isInside(Time time) {
+		if (time.toSeconds() >= start.toSeconds()
+				&& time.toSeconds() <= end.toSeconds()) {
+			return true;
+		}
+		return false;
+	}
+
 	@Override
-	public String toString(){
+	public String toString() {
 		return start + " - " + end;
 	}
 }

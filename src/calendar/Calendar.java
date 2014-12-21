@@ -3,8 +3,10 @@ package calendar;
 import java.util.ArrayList;
 import java.util.List;
 
+import calendar.Event.Activity;
 import time.Time;
 import time.Time.Weekday;
+import time.Timespan;
 
 public class Calendar {
 
@@ -102,6 +104,24 @@ public class Calendar {
 			if (entry.from.toSeconds() <= time.toSeconds()
 					&& entry.to.toSeconds() >= time.toSeconds()) {
 				return entry.event;
+			}
+		}
+		return null;
+	}
+
+	public Timespan findDailyActivity(Activity activity) {
+		for (Entry entry : dailyEvents) {
+			if (entry.event.getActivity() == activity) {
+				return new Timespan(entry.from, entry.to);
+			}
+		}
+		return null;
+	}
+	
+	public Timespan findWeeklyActivity(Activity activity) {
+		for (Entry entry : weeklyEvents) {
+			if (entry.event.getActivity() == activity) {
+				return new Timespan(entry.from, entry.to);
 			}
 		}
 		return null;

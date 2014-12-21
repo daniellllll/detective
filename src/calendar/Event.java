@@ -1,19 +1,30 @@
 package calendar;
 
+import persons.Person;
 import places.Place;
 
 public class Event {
 	public enum Activity {
-		WORKING, SLEEPING, BREAKFAST, LUNCH, DINNER, READING_A_BOOK, SHOPPING, BATH, 
-		CHOP_WOOD, SEWING, FREETIME_ACTIVITY, WALK, RELAX
+		WORKING, SLEEPING, BREAKFAST, LUNCH, DINNER, READING_A_BOOK, SHOPPING, BATH, CHOP_WOOD, SEWING, FREETIME_ACTIVITY, WALK, RELAX, MEET_AFFAIR
 	}
 
 	private Place place;
 	private Activity activity;
+	private Person person;
 
 	public Event(Activity activity, Place place) {
 		this.activity = activity;
 		this.place = place;
+	}
+
+	public Event(Activity activity, Place place, Person person) {
+		this.activity = activity;
+		this.place = place;
+		this.person = person;
+	}
+
+	public Person getPerson() {
+		return person;
 	}
 
 	public Place getPlace() {
@@ -55,6 +66,9 @@ public class Event {
 		case RELAX:
 			return "I needed a rest, so I was relaxing at the "
 					+ place.getName() + ". I felt much better after that.";
+		case MEET_AFFAIR:
+			return "I met my affair " + person.getName() + " at "
+					+ place.getName();
 		}
 		return null;
 	}

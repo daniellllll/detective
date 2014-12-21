@@ -1,5 +1,7 @@
 package main;
 
+import crime.motive.AffairGenerator;
+import crime.motive.MotiveGenerator;
 import generators.PersonsGenerator;
 import generators.WorldGenerator;
 import interfaces.Inspectable;
@@ -26,6 +28,9 @@ public class Control implements UIListener {
 
 		PersonsGenerator.generate();
 		WorldGenerator.generate();
+		
+		//TEST
+		new AffairGenerator().generate();
 
 		Place pub = null;
 		for (Place p : Environment.getAllPlaces()) {
