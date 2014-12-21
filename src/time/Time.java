@@ -1,6 +1,13 @@
 package time;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class Time {
+	public static enum Weekday {
+		MON, TUE, WED, THU, FRI, SAT, SUN
+	};
+
 	private int year, month, day, hour, minute;
 	private static long reftime;
 	private static Time starttime;
@@ -34,7 +41,7 @@ public class Time {
 		seconds -= minute * 60L;
 	}
 
-	public Time(String str) {		
+	public Time(String str) {
 		String datestr = str.split(" ")[0];
 		String timestr = str.split(" ")[1];
 		String datedata[] = datestr.split("\\.");
@@ -69,6 +76,30 @@ public class Time {
 	public long toSeconds() {
 		return year * 31536000L + month * 2592000 + day * 86400 + hour * 3600
 				+ minute * 60;
+	}
+
+	public Weekday getWeekday() {
+		Date d = new Date(year, month, day);
+		Calendar c = Calendar.getInstance();
+		c.setTime(d);
+		int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+		switch (dayOfWeek) {
+		case Calendar.SUNDAY:
+			return Weekday.SUN;
+		case Calendar.MONDAY:
+			return Weekday.MON;
+		case Calendar.TUESDAY:
+			return Weekday.TUE;
+		case Calendar.WEDNESDAY:
+			return Weekday.WED;
+		case Calendar.THURSDAY:
+			return Weekday.THU;
+		case Calendar.FRIDAY:
+			return Weekday.FRI;
+		case Calendar.SATURDAY:
+			return Weekday.SAT;
+		}
+		return null;
 	}
 
 	@Override

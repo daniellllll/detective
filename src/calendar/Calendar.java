@@ -4,26 +4,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import time.Time;
+import time.Time.Weekday;
 
 public class Calendar {
 
 	private class Entry {
 		public Event event;
 		public Time from, to;
+		public Weekday weekday = null;
 
 		public Entry(Event event, Time from, Time to) {
 			this.event = event;
 			this.from = from;
 			this.to = to;
 		}
+
+		public Entry(Event event, Time from, Time to, Weekday weekday) {
+			this.event = event;
+			this.from = from;
+			this.to = to;
+			this.weekday = weekday;
+		}
 	}
 
 	private List<Entry> events;
 	private List<Entry> dailyEvents;
+	private List<Entry> weeklyEvents;
 
 	public Calendar() {
 		events = new ArrayList<>();
 		dailyEvents = new ArrayList<>();
+		weeklyEvents = new ArrayList<>();
 	}
 
 	public void addEvent(Event event, Time from, Time to) {
@@ -45,7 +56,12 @@ public class Calendar {
 		dailyEvents.add(new Entry(event, from, to));
 	}
 
+	public void addWeeklyEvent(Event event, Time from, Time to, Weekday day) {
+		weeklyEvents.add(new Entry(event, from, to, day));
+	}
+
 	public Event get(Time time) {
+		// normal events
 		for (Entry entry : events) {
 			if (entry.from.toSeconds() <= time.toSeconds()
 					&& entry.to.toSeconds() >= time.toSeconds()) {
@@ -53,7 +69,29 @@ public class Calendar {
 			}
 		}
 
+		// normalize time for periodic events
+		Weekday weekday = time.getWeekday();
 		time = new Time(time.getHour(), time.getMinute());
+
+		// weekly events
+		for (Entry entry : weeklyEvents) {
+			if (entry.to.toSeconds() < entry.from.toSeconds()) {
+				if (time.toSeconds() < entry.to.toSeconds()
+						|| time.toSeconds() > entry.from.toSeconds()) {
+					if (entry.weekday == weekday) {
+						return entry.event;
+					}
+				}
+			}
+			if (entry.from.toSeconds() <= time.toSeconds()
+					&& entry.to.toSeconds() >= time.toSeconds()) {
+				if (entry.weekday == weekday) {
+					return entry.event;
+				}
+			}
+		}
+
+		// daily events
 		for (Entry entry : dailyEvents) {
 			if (entry.to.toSeconds() < entry.from.toSeconds()) {
 				if (time.toSeconds() < entry.to.toSeconds()
