@@ -2,7 +2,6 @@ package crime.motive;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import calendar.Event;
 import calendar.Event.Activity;
 import persons.Person;
@@ -14,17 +13,17 @@ import time.Timespan;
 import utils.Random;
 
 public class AffairGenerator extends MotiveGenerator {
+	private String reason;
 
-	@Override
-	public void generate() {
+	public AffairGenerator() {
 		// find person with partner
 		Person person = Random.getRandElem(Environment.getAllPersons());
 		while (person.getPartner() == null) {
 			person = Random.getRandElem(Environment.getAllPersons());
 		}
-		
+
 		// find affair (different gender, no relative)
-		List<Relationship> relatives = new ArrayList();
+		List<Relationship> relatives = new ArrayList<>();
 		relatives.add(Relationship.FATHER);
 		relatives.add(Relationship.MOTHER);
 		relatives.add(Relationship.PARTNER);
@@ -34,7 +33,7 @@ public class AffairGenerator extends MotiveGenerator {
 				|| relatives.contains(person.getRelationship(affair))) {
 			affair = Random.getRandElem(Environment.getAllPersons());
 		}
-		
+
 		// add meetings to their calendars
 		Weekday weekdays[] = { Weekday.MON, Weekday.TUE, Weekday.WED,
 				Weekday.THU, Weekday.FRI, Weekday.SAT, Weekday.SUN };
@@ -58,5 +57,38 @@ public class AffairGenerator extends MotiveGenerator {
 		affair.getCalendar().addWeeklyEvent(
 				new Event(Activity.MEET_AFFAIR, affair.getResidence(), person),
 				from, to, weekday);
+
+		// determine offender and victim
+		reason = person.getName() + ", the partner of "
+				+ person.getPartner().getName() + ", has an affair with "
+				+ affair.getName() + ". ";
+		switch (Random.randInt(1, 4)) {
+		// partner of cheater kills affair
+		case 1:
+			victim = affair;
+			offender = person.getPartner();
+			reason += "Therefore " + offender.getName() + " killed "
+					+ victim.getName() + ".";
+			break;
+		// partner kills cheater
+		case 2:
+			victim = person;
+			offender = person.getPartner();
+			reason += "Therefore " + offender.getName() + " killed "
+					+ victim.getName() + ".";
+			break;
+		// affair kills partner of cheater
+		case 3:
+			victim = person.getPartner();
+			offender = affair;
+			reason += "Therefore " + offender.getName() + " killed "
+					+ victim.getName() + ".";
+			break;
+		}
+	}
+
+	@Override
+	public String toString() {
+		return reason;
 	}
 }

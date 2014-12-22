@@ -54,6 +54,7 @@ public class CalendarTest {
 		assertEquals(e1, c.get(new Time(12, 30)));
 		assertEquals(e1, c.get(new Time(12, 59)));
 		assertEquals(e2, c.get(new Time(13, 01)));
+
 	}
 
 }
