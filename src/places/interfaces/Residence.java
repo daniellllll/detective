@@ -6,5 +6,5 @@ public interface Residence {
 
 	public Person[] getResidents();
 
-	public void setResidents(Person persons[]);
+	public void addResident(Person resident);
 }

@@ -68,6 +68,9 @@ public class WorldGenerator {
 			residents[0].setResidence((Place) residence);
 			residents[1].setResidence((Place) residence);
 			residents[2].setResidence((Place) residence);
+			residence.addResident(residents[0]);
+			residence.addResident(residents[1]);
+			residence.addResident(residents[2]);
 		}
 		int rest = persons.length - i;
 		if (rest > 0) {
@@ -83,6 +86,7 @@ public class WorldGenerator {
 			places.add((Place) residence);
 			for (int j = 0; j < rest; j++) {
 				residents[j].setResidence((Place) residence);
+				residence.addResident(residents[j]);
 			}
 		}
 	}

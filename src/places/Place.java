@@ -26,13 +26,17 @@ public abstract class Place implements Inspectable, ItemContainer {
 
 	public Inspectable[] getInspectables() {
 		Person persons[] = getPersons();
-		Inspectable insps[] = new Inspectable[persons.length + items.size()];
+		Inspectable insps[] = new Inspectable[persons.length + items.size()
+				+ reachablePlaces.size()];
 		int i = 0;
 		for (Person p : persons) {
 			insps[i++] = (Inspectable) p;
 		}
 		for (Item item : items) {
 			insps[i++] = (Inspectable) item;
+		}
+		for (Place place : reachablePlaces) {
+			insps[i++] = place;
 		}
 		return insps;
 	}
