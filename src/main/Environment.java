@@ -71,20 +71,11 @@ public class Environment {
 		return null;
 	}
 
-	public static Place getPlace(String name) {
-		for (Place p : player.getPlace().getReachablePlaces()) {
-			if (p.getName().equals(name)) {
-				return p;
-			}
-		}
-		return null;
-	}
-
 	public static Place getActPlace() {
 		return player.getPlace();
 	}
-	
-	public static void debug(){
+
+	public static void debug() {
 
 	}
 }

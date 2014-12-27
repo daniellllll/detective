@@ -101,6 +101,7 @@ public class Control implements UIListener {
 	@Override
 	public void onGoto(Place place) {
 		player.goTo(place);
+		UI.write("you are at " + place.getName());
 	}
 
 }

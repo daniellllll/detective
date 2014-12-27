@@ -57,12 +57,12 @@ public class UI {
 			listener.onTake(input);
 			break;
 		case "goto":
-			Place p = Environment.getPlace(input);
-			if (p == null) {
+			Place place = getPlace(input);
+			if (place == null) {
 				UI.write("This place isn't reachable!");
 				return;
 			}
-			listener.onGoto(p);
+			listener.onGoto(place);
 			break;
 		case "ask":
 			Person person = Environment.getPerson(input);
@@ -123,5 +123,24 @@ public class UI {
 
 	public static void setUIListener(UIListener uilistener) {
 		listener = uilistener;
+	}
+
+	private static boolean compare(String strA, String strB) {
+		strA = strA.toLowerCase();
+		strB = strB.toLowerCase();
+		if (strA.equals(strB))
+			return true;
+		if (strB.substring(0, strA.length()).equals(strA))
+			return true;
+		return false;
+	}
+
+	private static Place getPlace(String input) {
+		for (Place p : Environment.getActPlace().getReachablePlaces()) {
+			if (compare(input, p.getName())) {
+				return p;
+			}
+		}
+		return null;
 	}
 }
