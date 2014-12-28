@@ -62,20 +62,7 @@ public class Environment {
 		return inspectables;
 	}
 
-	public static Person getPerson(String fullname) {
-		for (Person p : player.getPlace().getPersons()) {
-			if (p.getName().equals(fullname)) {
-				return p;
-			}
-		}
-		return null;
-	}
-
 	public static Place getActPlace() {
 		return player.getPlace();
-	}
-
-	public static void debug() {
-
 	}
 }

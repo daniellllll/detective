@@ -20,6 +20,7 @@ public class Person implements Inspectable {
 	private Person father, mother, partner;
 	private Gender gender;
 	private Place residence, workplace;
+	private int askedQuestions;
 
 	public enum Gender {
 		male, female
@@ -40,10 +41,23 @@ public class Person implements Inspectable {
 		this.father = father;
 		this.mother = mother;
 		this.gender = gender;
+		askedQuestions = 0;
 	}
 
 	public void ask(Question question) {
-		question.answer();
+		askedQuestions++;
+		if (askedQuestions < 5) {
+			question.answer();
+			UI.write("It's a pleasure for me to help you.");
+		} else if (askedQuestions < 10) {
+			question.answer();
+			UI.write("It's a pleasure for me to help you but I'm in a hurry now.");
+		} else if (askedQuestions < 15) {
+			question.answer();
+			UI.write("I'm sorry, but your questions are annoying me a bit.");
+		} else {
+			UI.write("Go please. I don't want to answer any further questions.");
+		}
 	}
 
 	public Relationship getRelationship(Person person) {

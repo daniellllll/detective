@@ -65,7 +65,7 @@ public class UI {
 			listener.onGoto(place);
 			break;
 		case "ask":
-			Person person = Environment.getPerson(input);
+			Person person = getPerson(input);
 			if (person == null) {
 				UI.write("This Person isn't here!");
 				return;
@@ -74,7 +74,7 @@ public class UI {
 
 			// Relationship question
 			if (question.startsWith("do you know")) {
-				Person b = Environment.getPerson(question.substring(12));
+				Person b = getPerson(question.substring(12));
 				if (b == null) {
 					UI.write("This person isn't here!");
 					return;
@@ -137,6 +137,15 @@ public class UI {
 
 	private static Place getPlace(String input) {
 		for (Place p : Environment.getActPlace().getReachablePlaces()) {
+			if (compare(input, p.getName())) {
+				return p;
+			}
+		}
+		return null;
+	}
+
+	private static Person getPerson(String input) {
+		for (Person p : Environment.getActPlace().getPersons()) {
 			if (compare(input, p.getName())) {
 				return p;
 			}
