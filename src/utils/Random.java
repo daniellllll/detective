@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.List;
+
 public class Random {
 	private static java.util.Random rand;
 
@@ -20,9 +22,13 @@ public class Random {
 			random[i] = randElem;
 		}
 	}
-	
-	public static <E> E getRandElem(E[] array){
-		return array[randInt(0,array.length)];
+
+	public static <E> E getRandElem(E[] array) {
+		return array[randInt(0, array.length)];
+	}
+
+	public static <E> E getRandElem(List<E> list) {
+		return list.get(randInt(0, list.size()));
 	}
 
 	private static <E> boolean arrayContains(E[] array, E item) {

@@ -5,7 +5,7 @@ import places.Place;
 
 public class Event {
 	public enum Activity {
-		WORKING, SLEEPING, BREAKFAST, LUNCH, DINNER, READING_A_BOOK, SHOPPING, BATH, CHOP_WOOD, SEWING, FREETIME_ACTIVITY, WALK, RELAX, MEET_AFFAIR
+		BUYING_TICKET, WORKING, SLEEPING, BREAKFAST, LUNCH, DINNER, READING_A_BOOK, SHOPPING, BATH, CHOP_WOOD, SEWING, FREETIME_ACTIVITY, WALK, RELAX, MEET_AFFAIR
 	}
 
 	private Place place;
@@ -69,6 +69,8 @@ public class Event {
 		case MEET_AFFAIR:
 			return "I met my affair " + person.getName() + " at "
 					+ place.getName();
+		case BUYING_TICKET:
+			return "I bought a ticket at " + place.getName() + ".";
 		}
 		return null;
 	}
