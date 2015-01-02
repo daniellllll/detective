@@ -1,6 +1,7 @@
 package ui;
 
 import interfaces.Inspectable;
+import items.Item;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -48,13 +49,55 @@ public class UI {
 			UI.write("There is no \"" + input + "\"");
 			break;
 		case "use":
-			int forbegin = input.indexOf("for");
-			String item1 = input.substring(0, forbegin - 1);
-			String item2 = input.substring(forbegin + 4);
+			int forbegin = input.indexOf(" for ");
+			String item1 = input.substring(0, forbegin);
+			String item2 = input.substring(forbegin + 5);
 			listener.onUse(item1, item2);
 			break;
 		case "take":
-			listener.onTake(input);
+			int indexOfFrom = input.indexOf(" from ");
+			if (indexOfFrom != -1) {
+				String strItem1 = input.substring(0, indexOfFrom);
+				String strItem2 = input.substring(indexOfFrom + 6);
+				Item itemA = getItemFrom(strItem1, strItem2);
+				Item itemB = getItem(strItem2);
+				if (itemA == null) {
+					UI.write("There is no " + strItem1 + ".");
+					return;
+				}
+				if (itemB == null) {
+					UI.write("There is no " + strItem2 + ".");
+					return;
+				}
+				listener.onTake(itemA, itemB);
+			} else {
+				Item item = getItem(input);
+				if (item == null) {
+					UI.write("There is no " + input + ".");
+					return;
+				}
+				listener.onTake(item, null);
+			}
+			break;
+		case "put":
+			int indexOfPut = input.indexOf(" into ");
+			if (indexOfPut != -1) {
+				String strItem1 = input.substring(0, indexOfPut);
+				String strItem2 = input.substring(indexOfPut + 6);
+				Item itemA = getItem(strItem1);
+				Item itemB = getItem(strItem2);
+				if (itemA == null) {
+					UI.write("There is no " + strItem1 + ".");
+					return;
+				}
+				if (itemB == null) {
+					UI.write("There is no " + strItem2 + ".");
+					return;
+				}
+				listener.onPut(itemA, itemB);
+			} else {
+				UI.write("Wrong command!");
+			}
 			break;
 		case "goto":
 			Place place = getPlace(input);
@@ -126,12 +169,17 @@ public class UI {
 	}
 
 	private static boolean compare(String strA, String strB) {
+		if (strA.length() > strB.length())
+			return false;
 		strA = strA.toLowerCase();
 		strB = strB.toLowerCase();
 		if (strA.equals(strB))
 			return true;
-		if (strB.substring(0, strA.length()).equals(strA))
-			return true;
+		if (strB.substring(0, strA.length()).equals(strA)){
+			UI.write("did you mean "+ strB+ "? (y/n)");
+			if(UI.read().equals("y"))
+				return true;
+		}
 		return false;
 	}
 
@@ -148,6 +196,32 @@ public class UI {
 		for (Person p : Environment.getActPlace().getPersons()) {
 			if (compare(input, p.getName())) {
 				return p;
+			}
+		}
+		return null;
+	}
+
+	private static Item getItem(String name) {
+		for (Inspectable insp : Environment.getInspectables()) {
+			if (insp instanceof Item) {
+				if (compare(name, insp.getName())) {
+					return (Item) insp;
+				}
+			}
+		}
+		return null;
+	}
+
+	private static Item getItemFrom(String item, String from) {
+		for (Inspectable insp : Environment.getInspectables()) {
+			if (insp instanceof Item) {
+				if (compare(from, insp.getName())) {
+					for (Item content : ((Item) insp).getItems()) {
+						if (compare(item, content.getName())) {
+							return content;
+						}
+					}
+				}
 			}
 		}
 		return null;

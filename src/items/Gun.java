@@ -13,10 +13,4 @@ public class Gun extends Item{
 		UI.write("A Gun.");
 	}
 
-	@Override
-	public void use(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

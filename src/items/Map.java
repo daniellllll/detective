@@ -26,10 +26,4 @@ public class Map extends Item {
 		}
 	}
 
-	@Override
-	public void use(Item item) {
-		// TODO Auto-generated method stub
-
-	}
-
 }

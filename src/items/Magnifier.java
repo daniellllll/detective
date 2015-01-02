@@ -1,9 +1,10 @@
 package items;
 
-public class Pencil extends Item{
+public class Magnifier extends Item{
 
-	public Pencil(String name) {
+	public Magnifier(String name) {
 		super(name);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override

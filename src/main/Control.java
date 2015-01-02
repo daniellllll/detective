@@ -36,6 +36,10 @@ public class Control implements UIListener {
 			}
 		}
 
+		player = new Player();
+		Environment.setPlayer(player);
+		player.goTo(pub);
+
 		Knife knife = new Knife("knife");
 		knife.insertInto(pub);
 		Pencil pencil = new Pencil("pencil");
@@ -44,12 +48,15 @@ public class Control implements UIListener {
 		notepad.insertInto(pub);
 		Watch watch = new Watch("watch");
 		watch.insertInto(pub);
+		Fingerprint fingerprint = new Fingerprint("Fingerprint", null);
+		fingerprint.insertInto(watch);
 		Map map = new Map("map");
 		map.insertInto(pub);
-
-		player = new Player();
-		Environment.setPlayer(player);
-		player.goTo(pub);
+		FingerprintFile fingerprintfile = new FingerprintFile(
+				"fingerprint file");
+		fingerprintfile.insertInto(player);
+		Magnifier magnifier = new Magnifier("magnifier");
+		magnifier.insertInto(player);
 
 		UI.setUIListener(this);
 		UI.write("You are in the pub.");
@@ -81,16 +88,11 @@ public class Control implements UIListener {
 	}
 
 	@Override
-	public void onTake(String name) {
-		for (Inspectable insp : Environment.getInspectables()) {
-			if (insp.getName().equals(name)) {
-				if (insp instanceof Item) {
-					((Item) insp).insertInto(player);
-					return;
-				}
-			}
+	public void onTake(Item item, Item from) {
+		if(from != null){
+			from.removeItem(item);
 		}
-		UI.write("There is no \"" + name + "\"");
+		item.insertInto(player);
 	}
 
 	@Override
@@ -102,6 +104,11 @@ public class Control implements UIListener {
 	public void onGoto(Place place) {
 		player.goTo(place);
 		UI.write("you are at " + place.getName());
+	}
+
+	@Override
+	public void onPut(Item item, Item into) {		
+		into.insertItem(item);
 	}
 
 }

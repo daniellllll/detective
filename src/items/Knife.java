@@ -13,10 +13,4 @@ public class Knife extends Item{
 		UI.write("This knife looks sharp");
 	}
 
-	@Override
-	public void use(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

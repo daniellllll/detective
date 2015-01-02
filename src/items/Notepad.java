@@ -19,7 +19,7 @@ public class Notepad extends Item {
 	}
 
 	@Override
-	public void use(Item item) {
+	public void use(Item item) {		
 		if (item instanceof Pencil) {
 			if (item.container instanceof Player && container instanceof Player) {
 				UI.write("Make notes!");
@@ -29,8 +29,9 @@ public class Notepad extends Item {
 				UI.write("You should own the items you want to use!");
 			}
 		} else {
-			UI.write("This won't work.");
+			super.use(item);
 		}
+		
 	}
 
 }

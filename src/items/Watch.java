@@ -14,10 +14,4 @@ public class Watch extends Item{
 		UI.write(Time.now().toString());
 	}
 
-	@Override
-	public void use(Item item) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
