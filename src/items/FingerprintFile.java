@@ -14,6 +14,10 @@ public class FingerprintFile extends Item {
 			UI.write("It's a fingerprint file. You can use it to collect fingerprints from items. Therefore you have to put fingerprints, which you took from items, into the file.");
 			return;
 		}
+		int count = 1;
+		for(Item fingerprint : items){
+			UI.write(count++ + ". ) " + fingerprint.getName());
+		}
 	}
 
 	@Override

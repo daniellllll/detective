@@ -40,13 +40,11 @@ public class UI {
 				listener.onInspect(Environment.getActPlace());
 				break;
 			}
-			for (Inspectable insp : Environment.getInspectables()) {
-				if (insp.getName().equals(input)) {
-					listener.onInspect(insp);
-					return;
-				}
-			}
-			UI.write("There is no \"" + input + "\"");
+			Inspectable insp = getInspectable(input);
+			if (insp == null)
+				UI.write("There is no \"" + input + "\"");
+			else
+				listener.onInspect(insp);
 			break;
 		case "use":
 			int forbegin = input.indexOf(" for ");
@@ -175,9 +173,9 @@ public class UI {
 		strB = strB.toLowerCase();
 		if (strA.equals(strB))
 			return true;
-		if (strB.substring(0, strA.length()).equals(strA)){
-			UI.write("did you mean "+ strB+ "? (y/n)");
-			if(UI.read().equals("y"))
+		if (strB.substring(0, strA.length()).equals(strA)) {
+			UI.write("did you mean " + strB + "? (y/n)");
+			if (UI.read().equals("y"))
 				return true;
 		}
 		return false;
@@ -196,6 +194,15 @@ public class UI {
 		for (Person p : Environment.getActPlace().getPersons()) {
 			if (compare(input, p.getName())) {
 				return p;
+			}
+		}
+		return null;
+	}
+
+	private static Inspectable getInspectable(String name) {
+		for (Inspectable insp : Environment.getInspectables()) {
+			if (compare(name, insp.getName())) {
+				return insp;
 			}
 		}
 		return null;
