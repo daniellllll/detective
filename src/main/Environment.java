@@ -16,6 +16,10 @@ public class Environment {
 		player = p;
 	}
 
+	public static Player getPlayer() {
+		return player;
+	}
+
 	public static void setPersons(Person p[]) {
 		persons = p;
 	}

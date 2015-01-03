@@ -31,6 +31,13 @@ public class UI {
 			System.out.println(text);
 	}
 
+	public static boolean ask(String question) {
+		UI.write(question);
+		if (UI.read().equals("y"))
+			return true;
+		return false;
+	}
+
 	public static void waitForInput() {
 		System.out.print("> ");
 		String input = read();
@@ -153,6 +160,12 @@ public class UI {
 				listener.onAsk(person, q);
 			}
 
+			// Fingerprint question
+			else if (question.equals("can i take your fingerprint")) {
+				Question q = new FingerprintQuestion(person);
+				listener.onAsk(person, q);
+			}
+
 			else {
 				write("Unknown question.");
 				return;
@@ -184,9 +197,7 @@ public class UI {
 		if (strA.equals(strB))
 			return true;
 		if (strB.substring(0, strA.length()).equals(strA)) {
-			UI.write("did you mean " + strB + "? (y/n)");
-			if (UI.read().equals("y"))
-				return true;
+			return ask("did you mean " + strB + "? (y/n)");
 		}
 		return false;
 	}
