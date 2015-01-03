@@ -2,6 +2,7 @@ package crime.weapon;
 
 import persons.Person;
 import time.Time;
+import items.Fingerprint;
 import items.Item;
 
 public abstract class WeaponGenerator {
@@ -16,6 +17,11 @@ public abstract class WeaponGenerator {
 
 	public Item getWeapon() {
 		return weapon;
+	}
+
+	protected void addFingerprints() {
+		Fingerprint fp = offender.createFingerprint();
+		fp.insertInto(weapon);
 	}
 
 }

@@ -16,9 +16,19 @@ import time.Time;
 public class UI {
 
 	private static UIListener listener;
+	private static boolean outputEnabled = true;
+
+	public static void enableOutput() {
+		outputEnabled = true;
+	}
+
+	public static void disableOutput() {
+		outputEnabled = false;
+	}
 
 	public static void write(String text) {
-		System.out.println(text);
+		if (outputEnabled)
+			System.out.println(text);
 	}
 
 	public static void waitForInput() {

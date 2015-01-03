@@ -22,24 +22,28 @@ public class Control implements UIListener {
 	}
 
 	public Control() {
+		UI.disableOutput();
+		
 		// set time
 		Time.setStartTime(new Time(1815, 3, 21, 17, 50));
 
+		// start generators
 		PersonsGenerator.generate();
 		WorldGenerator.generate();
 		CrimeGenerator.generate();
 
+		//start in pub
 		Place pub = null;
 		for (Place p : Environment.getAllPlaces()) {
 			if (p instanceof Pub) {
 				pub = p;
 			}
 		}
-
 		player = new Player();
 		Environment.setPlayer(player);
 		player.goTo(pub);
 
+		//add example Items
 		Knife knife = new Knife("knife");
 		knife.insertInto(pub);
 		Pencil pencil = new Pencil("pencil");
@@ -57,7 +61,8 @@ public class Control implements UIListener {
 		fingerprintfile.insertInto(player);
 		Magnifier magnifier = new Magnifier("magnifier");
 		magnifier.insertInto(player);
-
+		
+		UI.enableOutput();
 		UI.setUIListener(this);
 		UI.write("You are in the pub.");
 		while (true) {

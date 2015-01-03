@@ -4,9 +4,11 @@ import persons.questions.Question;
 import places.Place;
 import ui.UI;
 import interfaces.Inspectable;
+import items.Fingerprint;
 import calendar.Calendar;
 
 public class Person implements Inspectable {
+	private static int fingerprintCount = 1;
 
 	public enum Relationship {
 		FATHER, MOTHER, SIBLING, FRIEND, PARTNER
@@ -170,6 +172,10 @@ public class Person implements Inspectable {
 
 	public void setWorkplace(Place workplace) {
 		this.workplace = workplace;
+	}
+
+	public Fingerprint createFingerprint() {
+		return new Fingerprint("fingerprint #" + fingerprintCount++, this);
 	}
 
 	@Override

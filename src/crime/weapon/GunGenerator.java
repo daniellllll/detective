@@ -25,6 +25,7 @@ public class GunGenerator extends WeaponGenerator {
 		shoppingTime = new Time(time.toSeconds() - 60 * 60 * 24 * 7);
 		offender.getCalendar().addEvent(new Event(Activity.SHOPPING, place),
 				shoppingTime, new Time(shoppingTime.toSeconds() + 60 * 10));
+		addFingerprints();
 	}
 
 	@Override
