@@ -28,7 +28,7 @@ public class TheatreMurder extends MurderGenerator {
 
 	private static Place generatePlace() {
 		List<Place> places = new ArrayList<>();
-		for (Place p : Environment.getAllPlaces()) {
+		for (Place p : Environment.getCity().getPlaces()) {
 			if (p instanceof Theatre) {
 				places.add(p);
 			}

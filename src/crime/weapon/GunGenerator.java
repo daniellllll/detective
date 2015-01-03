@@ -18,7 +18,7 @@ public class GunGenerator extends WeaponGenerator {
 		super(offender, time);
 		weapon = new Gun("gun");
 		place = null;
-		for (Place p : Environment.getAllPlaces()) {
+		for (Place p : Environment.getCity().getPlaces()) {
 			if (p instanceof GunSmithery)
 				place = p;
 		}

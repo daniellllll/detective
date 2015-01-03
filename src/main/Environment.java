@@ -1,5 +1,6 @@
 package main;
 
+import city.City;
 import interfaces.Inspectable;
 import interfaces.Useable;
 import items.Item;
@@ -10,7 +11,7 @@ import player.Player;
 public class Environment {
 	private static Player player;
 	private static Person[] persons;
-	private static Place[] places;
+	private static City city;
 
 	public static void setPlayer(Player p) {
 		player = p;
@@ -20,21 +21,21 @@ public class Environment {
 		return player;
 	}
 
+	public static void setCity(City c) {
+		city = c;
+	}
+
+	public static City getCity() {
+		return city;
+	}
+
 	public static void setPersons(Person p[]) {
 		persons = p;
 	}
 
 	public static Person[] getAllPersons() {
 		return persons;
-	}
-
-	public static void setPlaces(Place p[]) {
-		places = p;
-	}
-
-	public static Place[] getAllPlaces() {
-		return places;
-	}
+	}	
 
 	public static Useable[] getUseables() {
 		Useable useables[] = new Useable[player.getPlace().getUseables().length

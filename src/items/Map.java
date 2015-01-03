@@ -14,11 +14,11 @@ public class Map extends Item {
 
 	@Override
 	public void inspect() {
-		for (Place p : Environment.getAllPlaces()) {
+		for (Place p : Environment.getCity().getPlaces()) {
 			if (p instanceof Street) {
 				UI.write(p.getName());
-				for(Place r:p.getReachablePlaces()){
-					if(r instanceof Enterprise){
+				for (Place r : p.getReachablePlaces()) {
+					if (r instanceof Enterprise) {
 						UI.write("   " + r.getName());
 					}
 				}

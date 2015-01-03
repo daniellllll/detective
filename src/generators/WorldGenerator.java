@@ -4,27 +4,21 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import city.City;
 import main.Environment;
 import persons.Person;
 import places.*;
-import places.Enterprise;
 import places.interfaces.Residence;
 
 public class WorldGenerator {
-
-	private static List<Place> places = new ArrayList<>();
-	private static Street streets[];
+	private static City city;
 
 	public static void generate() {
+		city = Environment.getCity();
 		generateStreets();
 		generateResidences();
 		generateWorkplaces();
-		Place p[] = new Place[places.size()];
-		int i = 0;
-		for (Place place : places) {
-			p[i++] = place;
-		}
-		Environment.setPlaces(p);
 		generateCalendars();
 	}
 
@@ -34,18 +28,15 @@ public class WorldGenerator {
 				"Kinglake Road", "Coopers Road", "Oldfield Grove",
 				"Croft Street", "Mayflower Avenue", "Downtown Road",
 				"Silver Walk", "Fair Street" };
-		streets = new Street[names.length];
-		int i = 0;
 		for (String name : names) {
-			streets[i++] = new Street(name);
-			places.add(streets[i - 1]);
+			city.addPlace(new Street(name));
 		}
 
 		// connect streets
-		for (i = 0; i < 5; i++) {
+		Street[] streets = city.getStreets();
+		for (int i = 0; i < 5; i++) {
 			for (int j = streets.length - 5; j < streets.length; j++) {
-				streets[i].addReachablePlace(streets[j]);
-				streets[j].addReachablePlace(streets[i]);
+				city.connectPlaces(streets[i], streets[j]);
 			}
 		}
 
@@ -64,7 +55,7 @@ public class WorldGenerator {
 					+ (street.getLastHousenumber() + 1));
 			street.addReachablePlace((Place) residence);
 			((Place) residence).addReachablePlace(street);
-			places.add((Place) residence);
+			city.addPlace((Place) residence);
 			residents[0].setResidence((Place) residence);
 			residents[1].setResidence((Place) residence);
 			residents[2].setResidence((Place) residence);
@@ -81,9 +72,8 @@ public class WorldGenerator {
 			Street street = getNextStreet();
 			Residence residence = new Cabin(street.getName() + " "
 					+ (street.getLastHousenumber() + 1));
-			street.addReachablePlace((Place) residence);
-			((Place) residence).addReachablePlace(street);
-			places.add((Place) residence);
+			city.addPlace((Place) residence);
+			city.connectPlaces((Place) residence, street);
 			for (int j = 0; j < rest; j++) {
 				residents[j].setResidence((Place) residence);
 				residence.addResident(residents[j]);
@@ -112,10 +102,9 @@ public class WorldGenerator {
 		workplaces.add(new PoliceDepartment("policedepartment"));
 
 		for (Place p : workplaces) {
-			places.add(p);
+			city.addPlace(p);
 			Street street = getNextStreet();
-			p.addReachablePlace(street);
-			street.addReachablePlace(p);
+			city.connectPlaces(p, street);
 		}
 	}
 
@@ -127,7 +116,7 @@ public class WorldGenerator {
 			persons.offer(p);
 		}
 
-		for (Place place : Environment.getAllPlaces()) {
+		for (Place place : city.getPlaces()) {
 			if (place instanceof Enterprise) {
 				if (place instanceof Supermarket) {
 					assignPersonsToJob(persons, 3, place);
@@ -180,7 +169,7 @@ public class WorldGenerator {
 	private static Street getNextStreet() {
 		Street smallest = null;
 		int nr = 999;
-		for (Street s : streets) {
+		for (Street s : city.getStreets()) {
 			if (s.getLastHousenumber() < nr) {
 				smallest = s;
 				nr = s.getLastHousenumber();
