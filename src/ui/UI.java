@@ -1,6 +1,7 @@
 package ui;
 
 import interfaces.Inspectable;
+import interfaces.ItemContainer;
 import items.Item;
 
 import java.io.BufferedReader;
@@ -100,7 +101,7 @@ public class UI {
 				String strItem1 = input.substring(0, indexOfPut);
 				String strItem2 = input.substring(indexOfPut + 6);
 				Item itemA = getItem(strItem1);
-				Item itemB = getItem(strItem2);
+				ItemContainer itemB = getItemContainer(strItem2);
 				if (itemA == null) {
 					UI.write("There is no " + strItem1 + ".");
 					return;
@@ -202,18 +203,21 @@ public class UI {
 		return false;
 	}
 
-	private static Place getPlace(String input) {
+	private static Place getPlace(String name) {
+		if (compare(name, Environment.getActPlace().getName())) {
+			return Environment.getActPlace();
+		}
 		for (Place p : Environment.getActPlace().getReachablePlaces()) {
-			if (compare(input, p.getName())) {
+			if (compare(name, p.getName())) {
 				return p;
 			}
 		}
 		return null;
 	}
 
-	private static Person getPerson(String input) {
+	private static Person getPerson(String name) {
 		for (Person p : Environment.getActPlace().getPersons()) {
-			if (compare(input, p.getName())) {
+			if (compare(name, p.getName())) {
 				return p;
 			}
 		}
@@ -238,6 +242,13 @@ public class UI {
 			}
 		}
 		return null;
+	}
+
+	private static ItemContainer getItemContainer(String name) {
+		Item item = getItem(name);
+		if (item != null)
+			return item;
+		return getPlace(name);
 	}
 
 	private static Item getItemFrom(String item, String from) {

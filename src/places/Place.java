@@ -102,6 +102,7 @@ public abstract class Place implements Inspectable, ItemContainer {
 	@Override
 	public void insertItem(Item item) {
 		items.add(item);
+		UI.write(item.getName() + " is now in " + name + ".");
 	}
 
 	@Override

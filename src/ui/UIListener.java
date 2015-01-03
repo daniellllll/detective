@@ -1,6 +1,7 @@
 package ui;
 
 import interfaces.Inspectable;
+import interfaces.ItemContainer;
 import items.Item;
 import persons.Person;
 import persons.questions.Question;
@@ -13,8 +14,8 @@ public interface UIListener {
 	public void onUse(String item1, String item2);
 
 	public void onTake(Item item, Item from);
-	
-	public void onPut(Item item, Item into);
+
+	public void onPut(Item item, ItemContainer into);
 
 	public void onGoto(Place place);
 

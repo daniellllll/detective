@@ -5,6 +5,7 @@ import crime.CrimeGenerator;
 import generators.PersonsGenerator;
 import generators.WorldGenerator;
 import interfaces.Inspectable;
+import interfaces.ItemContainer;
 import interfaces.Useable;
 import items.*;
 import persons.Person;
@@ -116,8 +117,11 @@ public class Control implements UIListener {
 	}
 
 	@Override
-	public void onPut(Item item, Item into) {
-		into.insertItem(item);
+	public void onPut(Item item, ItemContainer into) {
+		if (player.hasItem(item))
+			into.insertItem(item);
+		else
+			UI.write("You must own " + item.getName());
 	}
 
 }

@@ -25,10 +25,18 @@ public class Player implements ItemContainer, Inspectable {
 		return place;
 	}
 
+	public boolean hasItem(Item item) {
+		for (Item i : items) {
+			if (i == item)
+				return true;
+		}
+		return false;
+	}
+
 	@Override
 	public void insertItem(Item item) {
 		items.add(item);
-		UI.write(item.getName()+" is now in your bag");
+		UI.write(item.getName() + " is now in your bag");
 	}
 
 	@Override
