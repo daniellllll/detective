@@ -35,7 +35,7 @@ public class WorldGenerator {
 		// connect streets
 		Street[] streets = city.getStreets();
 		for (int i = 0; i < 5; i++) {
-			for (int j = streets.length - 5; j < streets.length; j++) {
+			for (int j = 5; j < streets.length; j++) {
 				city.connectPlaces(streets[i], streets[j]);
 			}
 		}

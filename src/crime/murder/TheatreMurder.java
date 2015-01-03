@@ -21,7 +21,7 @@ public class TheatreMurder extends MurderGenerator {
 		place = generatePlace();
 
 		Event buyingTicket = new Event(Activity.BUYING_TICKET, place);
-		buyingTicketTime = new Time(time.toSeconds() - 60 * 60 * 24 * 7);
+		buyingTicketTime = new Time(time.toSeconds() - 60 * 60 * 24 * 2);
 		offender.getCalendar().addEvent(buyingTicket, buyingTicketTime,
 				new Time(buyingTicketTime.toSeconds() + 600));
 	}

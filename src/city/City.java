@@ -46,7 +46,16 @@ public class City {
 	}
 
 	public Place[] getShortestWay(Place start, Place target) {
-		return findShortestWay(new Place[] { start }, target);
+		Place[] way = findShortestWay(new Place[] { start }, target);
+		if (way == null)
+			return null;
+		if (way.length == 1)
+			return way;
+		Place w[] = new Place[way.length - 1];
+		for (int i = 1; i < way.length; i++) {
+			w[i - 1] = way[i];
+		}
+		return w;
 	}
 
 	private Place[] findShortestWay(Place[] way, Place target) {

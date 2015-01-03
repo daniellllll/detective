@@ -1,7 +1,10 @@
 package crime.motive;
 
+import generators.events.WalkGenerator;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import calendar.Event;
 import calendar.Event.Activity;
 import persons.Person;
@@ -57,6 +60,8 @@ public class AffairGenerator extends MotiveGenerator {
 		affair.getCalendar().addWeeklyEvent(
 				new Event(Activity.MEET_AFFAIR, affair.getResidence(), person),
 				from, to, weekday);
+		WalkGenerator.generateWeeklyEvent(person, person.getResidence(),
+				affair.getResidence(), weekday, from);
 
 		// determine offender and victim
 		reason = person.getName() + ", the partner of "

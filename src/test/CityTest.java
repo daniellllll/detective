@@ -37,10 +37,10 @@ public class CityTest {
 		city.connectPlaces(streetF, targetC);
 		city.connectPlaces(start, targetD);
 
-		Place[] wayA = new Place[] { start, streetA, streetB, streetC, targetA };
-		Place[] wayB = new Place[] { start, streetA, streetB, streetC, targetA,
+		Place[] wayA = new Place[] { streetA, streetB, streetC, targetA };
+		Place[] wayB = new Place[] { streetA, streetB, streetC, targetA,
 				streetF, targetC };
-		Place[] wayC = new Place[] { start, targetD };
+		Place[] wayC = new Place[] { targetD };
 		Place[] wayD = new Place[] { start };
 		assertArrayEquals(wayA, city.getShortestWay(start, targetA));
 		assertArrayEquals(null, city.getShortestWay(start, targetB));
